@@ -298,38 +298,85 @@ transition: background 0.15s;
 .share-btn:active { background: #222; }
 
 /* アフィリエイト */
+/* アフィリエイト（収納ケース提案） */
 .aff-section {
 background: var(–gray-bg);
 border-top: 1.5px solid var(–gray-line);
 padding: 1.4rem 1rem 1.8rem;
 }
-.aff-title {
-font-size: 0.82rem;
-font-weight: 800;
+.aff-section-title {
+font-size: 0.88rem;
+font-weight: 900;
 color: var(–navy);
 line-height: 1.6;
 margin-bottom: 1rem;
 }
-.aff-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.55rem; }
-@media (max-width: 440px) { .aff-grid { grid-template-columns: 1fr; } }
-.aff-card {
-display: flex;
-flex-direction: column;
-gap: 0.3rem;
+.prod-card {
 background: #fff;
 border: 1.5px solid var(–gray-line);
-border-radius: 8px;
-padding: 0.8rem 0.7rem;
-text-decoration: none;
-color: var(–text);
-font-size: 0.72rem;
-font-weight: 700;
-line-height: 1.4;
-transition: border-color 0.15s;
+border-radius: 12px;
+padding: 1.1rem 1.1rem 1rem;
+margin-bottom: 0.9rem;
 }
-.aff-card:active { border-color: var(–orange); }
-.aff-icon { font-size: 1.25rem; }
-.aff-cat  { font-size: 0.6rem; color: #aaa; font-weight: 400; margin-top: 0.1rem; }
+.prod-card:last-child { margin-bottom: 0; }
+.prod-tag {
+display: inline-block;
+background: var(–navy);
+color: #fff;
+font-size: 0.6rem;
+font-weight: 800;
+padding: 0.15rem 0.6rem;
+border-radius: 3px;
+letter-spacing: 0.08em;
+margin-bottom: 0.55rem;
+}
+.prod-title {
+font-size: 0.88rem;
+font-weight: 800;
+color: var(–text);
+line-height: 1.5;
+margin-bottom: 0.3rem;
+}
+.prod-name {
+font-size: 0.75rem;
+color: var(–text-sub);
+margin-bottom: 0.75rem;
+}
+.prod-check {
+background: #fff8e6;
+border: 1.5px solid #e6c940;
+border-radius: 8px;
+padding: 0.7rem 0.85rem;
+margin-bottom: 0.85rem;
+}
+.prod-check-title {
+font-size: 0.75rem;
+font-weight: 900;
+color: #8a6500;
+margin-bottom: 0.3rem;
+}
+.prod-check-body {
+font-size: 0.76rem;
+color: #5a4200;
+line-height: 1.65;
+}
+.prod-btn {
+display: block;
+width: 100%;
+background: linear-gradient(135deg, #e8611a 0%, #bf4a0e 100%);
+color: #fff;
+font-family: inherit;
+font-weight: 800;
+font-size: 0.85rem;
+padding: 0.75rem 1rem;
+border: none;
+border-radius: 8px;
+text-align: center;
+text-decoration: none;
+cursor: pointer;
+transition: opacity 0.15s;
+}
+.prod-btn:active { opacity: 0.85; }
 
 /* フッター */
 footer {
@@ -449,7 +496,34 @@ border-top: 1px solid var(–gray-line);
   </a>
 
   <div class="aff-section">
-<div class="aff-grid" id="aff-grid"></div>
+    <div class="aff-section-title">📦 自宅に在庫を引き上げるなら。同人誌がシンデレラフィットする最強ケース</div>
+
+```
+<!-- 商品1：B5縦置き用 -->
+<div class="prod-card">
+  <div class="prod-tag">B5縦置き用</div>
+  <div class="prod-title">B5を「立てて」綺麗に収納したい場合</div>
+  <div class="prod-name">無印良品 ポリプロピレン追加用ストッカー・深型</div>
+  <div class="prod-check">
+    <div class="prod-check-title">✔️ 購入前の最終チェック！</div>
+    <div class="prod-check-body">商品の寸法（外寸）の高さが「約30.5cm」、または引き出しの内寸高さが「約26.5cm」と書いてあるものが正解です！これならB5本（高さ25.7cm）がスッポリ立てて入ります。</div>
+  </div>
+  <a class="prod-btn" href="https://www.amazon.co.jp/s?k=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81+%E3%83%9D%E3%83%AA%E3%83%97%E3%83%AD%E3%83%94%E3%83%AC%E3%83%B3%E8%BF%BD%E5%8A%A0%E7%94%A8%E3%82%B9%E3%83%88%E3%83%83%E3%82%AB%E3%83%BC+%E6%B7%B1%E5%9E%8B&tag=otaku093-22" target="_blank" rel="noopener noreferrer">Amazonでこのストッカーを探す</a>
+</div>
+
+<!-- 商品2：A5二列・B5平積み用 -->
+<div class="prod-card">
+  <div class="prod-tag">A5二列 / B5平積み用</div>
+  <div class="prod-title">A5を2列、またはB5を「平積み」でたっぷり収納したい場合</div>
+  <div class="prod-name">無印良品 ポリプロピレンケース・引出式・横ワイド・深型</div>
+  <div class="prod-check">
+    <div class="prod-check-title">✔️ 購入前の最終チェック！</div>
+    <div class="prod-check-body">商品の寸法（外寸）が「幅 約37cm × 奥行き 約26cm × 高さ 約17.5cm」と書いてあるものが正解です！この幅広サイズなら、A5本を横に2列並べて綺麗に収納できます。</div>
+  </div>
+  <a class="prod-btn" href="https://www.amazon.co.jp/s?k=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81+%E3%83%9D%E3%83%AA%E3%83%97%E3%83%AD%E3%83%94%E3%83%AC%E3%83%B3%E3%82%B1%E3%83%BC%E3%82%B9+%E5%BC%95%E5%87%BA%E5%BC%8F+%E6%A8%AA%E3%83%AF%E3%82%A4%E3%83%89+%E6%B7%B1%E5%9E%8B+%E3%83%9B%E3%83%AF%E3%82%A4%E3%83%88%E3%82%B0%E3%83%AC%E3%83%BC&tag=otaku093-22" target="_blank" rel="noopener noreferrer">Amazonでこのケースを探す</a>
+</div>
+```
+
   </div>
 
 </div>
@@ -509,33 +583,9 @@ function calculate() {
   document.getElementById('share-btn').href =
     `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(pageUrl)}`;
 
-  renderAffCards();
-
   const results = document.getElementById('results');
   results.style.display = 'block';
   setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
-}
-
-function renderAffCards() {
-  const TAG  = 'otaku093-22';
-  const BASE = 'https://www.amazon.co.jp/s?tag=' + TAG + '&k=';
-  const groups = [
-    { kws: ['BL ポーズ集', 'ふたり ポーズ集'], icons: ['🧑‍🤝‍🧑','📖'], cat: '構図・ポーズ' },
-    { kws: ['服のシワ 描き方', '背景パース 本'],  icons: ['👗','🏙️'],  cat: '服・背景テクニック' },
-    { kws: ['イラスト 解剖学', 'カラー＆ライト'], icons: ['🦴','💡'],  cat: '解剖学・光と影' }
-  ];
-  const grid = document.getElementById('aff-grid');
-  grid.innerHTML = '';
-  groups.forEach(g => {
-    const i = Math.floor(Math.random() * g.kws.length);
-    const a = document.createElement('a');
-    a.href      = BASE + encodeURIComponent(g.kws[i]);
-    a.target    = '_blank';
-    a.rel       = 'noopener noreferrer';
-    a.className = 'aff-card';
-    a.innerHTML = `<span class="aff-icon">${g.icons[i]}</span><span>${g.kws[i]}</span><span class="aff-cat">${g.cat} / Amazon検索</span>`;
-    grid.appendChild(a);
-  });
 }
 
 ['price','qty'].forEach(id => {
