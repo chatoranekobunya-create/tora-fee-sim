@@ -470,6 +470,14 @@ border-top: 1px solid var(–gray-line);
       </div>
       <div class="result-note" id="res-return-detail"></div>
     </div>
+    <div class="result-row">
+      <div class="result-label">保管料の「元を取る」ための最低販売数</div>
+      <div class="result-val-wrap">
+        <span class="big-num" id="res-cover-num">0</span>
+        <span class="result-unit" id="res-cover-unit">冊 / 月</span>
+      </div>
+      <div class="result-note" id="res-cover-note"></div>
+    </div>
   </div>
 
   <div class="sec-label">③ 完売した場合の受取額</div>
@@ -569,6 +577,27 @@ function calculate() {
   document.getElementById('res-storage-detail').textContent  = '残' + fmt(qty) + '冊 → ' + storageUnits + '単位 × ' + STORAGE_UNIT_FEE.toLocaleString() + '円';
   document.getElementById('res-return-fee').textContent      = fmt(returnFee);
   document.getElementById('res-return-detail').textContent   = '返本手数料 ' + RETURN_BOX_FEE.toLocaleString() + '円 × 推定' + returnBoxes + '箱分';
+
+  // 保管料の元を取るための最低販売数
+  var coverBooks  = Math.ceil(storageMonthly / earnPerBook);
+  var coverEarn   = fmt(Math.floor(coverBooks * earnPerBook));
+  var coverNumEl  = document.getElementById('res-cover-num');
+  var coverUnitEl = document.getElementById('res-cover-unit');
+  var coverNoteEl = document.getElementById('res-cover-note');
+
+  if (coverBooks >= mustSell) {
+    coverNumEl.textContent  = '不可';
+    coverNumEl.className    = 'big-num red';
+    coverUnitEl.textContent = '';
+    coverNoteEl.textContent = '※単価に対して保管料が高いため、免除ライン（' + fmt(mustSell) + '冊）に到達して保管料を無料にしない限り赤字になります。';
+    coverNoteEl.style.color = '#b00000';
+  } else {
+    coverNumEl.textContent  = fmt(coverBooks);
+    coverNumEl.className    = 'big-num orange';
+    coverUnitEl.textContent = '冊 / 月';
+    coverNoteEl.textContent = '※月にこれだけ売れれば、利益（' + coverEarn + '円）でその月の保管料をカバーできます（赤字回避）';
+    coverNoteEl.style.color = '#999';
+  }
   document.getElementById('res-max-earn').textContent        = fmt(maxEarn);
   document.getElementById('prog-total').textContent          = qty + '冊';
   document.getElementById('prog-mid').textContent            = '免除ライン ' + fmt(mustSell) + '冊 (60%)';
