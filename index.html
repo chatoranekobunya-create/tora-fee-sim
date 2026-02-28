@@ -4,547 +4,475 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>とらのあな新制度：保管料＆損益シミュレーター</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;700;900&family=M+PLUS+Rounded+1c:wght@400;700;800&display=swap" rel="stylesheet">
+<title></title>
 <style>
-  :root {
-    --tora-orange: #E8611A;
-    --tora-orange-light: #FF8C42;
-    --tora-navy: #1A2744;
-    --tora-navy-deep: #0D1829;
-    --tora-cream: #FFF8F0;
-    --tora-red: #CC2200;
-    --tora-gold: #D4A017;
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-- { box-sizing: border-box; }
+:root {
+–orange:    #E8611A;
+–orange-lt: #FF8C42;
+–navy:      #1A2744;
+–red:       #CC2200;
+–gold:      #C49000;
+–green:     #1a7a45;
+–gray-bg:   #f5f5f5;
+–gray-line: #e0e0e0;
+–text:      #222;
+–text-sub:  #666;
+}
+
+html { font-size: 16px; }
 
 body {
-font-family: ‘M PLUS Rounded 1c’, ‘Zen Kaku Gothic New’, sans-serif;
-background: var(–tora-navy-deep);
-color: #e8e0d5;
+font-family: ‘Hiragino Maru Gothic ProN’, ‘Hiragino Sans’, ‘Yu Gothic UI’,
+‘BIZ UDGothic’, ‘Meiryo’, sans-serif;
+background-color: #fff;
+color: var(–text);
 min-height: 100vh;
+line-height: 1.6;
 }
 
-/* Tiger stripe background */
-body::before {
-content: ‘’;
-position: fixed;
-inset: 0;
-background: repeating-linear-gradient(
--55deg,
-transparent,
-transparent 60px,
-rgba(232,97,26,0.04) 60px,
-rgba(232,97,26,0.04) 62px
-);
-pointer-events: none;
-z-index: 0;
-}
-
-.content-wrap { position: relative; z-index: 1; }
-
-/* Header */
+/* ヘッダー */
 .site-header {
-background: linear-gradient(135deg, var(–tora-navy) 0%, #2a3f6f 100%);
-border-bottom: 3px solid var(–tora-orange);
-padding: 1.5rem 1rem;
+background: linear-gradient(135deg, #1a2744 0%, #253a6a 100%);
+border-bottom: 4px solid var(–orange);
+padding: 1.4rem 1rem 1.2rem;
 text-align: center;
 }
-
 .logo-badge {
 display: inline-block;
-background: var(–tora-orange);
-color: white;
-font-size: 0.65rem;
+background: var(–orange);
+color: #fff;
+font-size: 0.62rem;
 font-weight: 800;
-padding: 0.2rem 0.6rem;
+padding: 0.18rem 0.7rem;
 border-radius: 3px;
 letter-spacing: 0.1em;
-margin-bottom: 0.5rem;
-text-transform: uppercase;
+margin-bottom: 0.55rem;
 }
-
 .site-title {
-font-family: ‘Zen Kaku Gothic New’, sans-serif;
 font-weight: 900;
-font-size: clamp(1.3rem, 5vw, 2rem);
-color: white;
-line-height: 1.3;
+font-size: clamp(1.25rem, 5vw, 1.85rem);
+color: #fff;
+line-height: 1.35;
 }
+.site-title em { font-style: normal; color: var(–orange-lt); }
+.site-sub { font-size: 0.72rem; color: rgba(255,255,255,0.5); margin-top: 0.4rem; }
 
-.site-title span {
-color: var(–tora-orange-light);
-}
-
-/* Disclaimer */
+/* 免責事項 */
 .disclaimer {
-background: #2d0808;
-border: 2px solid var(–tora-red);
+background: #fff5f5;
+border: 1.5px solid #ffbbbb;
 border-radius: 8px;
-padding: 1rem 1.2rem;
+padding: 0.9rem 1.1rem;
 margin: 1rem;
-font-size: 0.78rem;
-line-height: 1.7;
-color: #ffb3b3;
+font-size: 0.76rem;
+line-height: 1.75;
+color: #b00000;
 }
-
-.disclaimer .disclaimer-title {
-color: #ff4444;
-font-weight: 800;
-font-size: 0.9rem;
+.disclaimer-title {
 display: block;
-margin-bottom: 0.4rem;
+font-weight: 800;
+font-size: 0.85rem;
+margin-bottom: 0.35rem;
 }
 
-/* Card base */
+/* カード */
 .card {
-background: rgba(26,39,68,0.85);
-border: 1px solid rgba(232,97,26,0.25);
+background: #fff;
+border: 1.5px solid var(–gray-line);
 border-radius: 12px;
-padding: 1.5rem;
-margin: 1rem;
-backdrop-filter: blur(4px);
+padding: 1.4rem;
+margin: 0.8rem 1rem;
 }
-
 .card-title {
 font-weight: 800;
-font-size: 1rem;
-color: var(–tora-orange-light);
-letter-spacing: 0.05em;
-margin-bottom: 1rem;
-display: flex;
-align-items: center;
-gap: 0.5rem;
+font-size: 0.95rem;
+color: var(–navy);
+letter-spacing: 0.03em;
+margin-bottom: 1.1rem;
 }
 
-/* Input styles */
-.input-group {
-margin-bottom: 1.2rem;
-}
-
+/* 入力フォーム */
+.input-group { margin-bottom: 1.1rem; }
 .input-label {
 display: block;
-font-size: 0.82rem;
+font-size: 0.8rem;
 font-weight: 700;
-color: #a0b4d8;
-margin-bottom: 0.4rem;
-letter-spacing: 0.04em;
+color: var(–text-sub);
+margin-bottom: 0.35rem;
 }
-
+.input-wrap { position: relative; }
 .input-field {
 width: 100%;
-background: rgba(0,0,0,0.4);
-border: 2px solid rgba(232,97,26,0.3);
+background: var(–gray-bg);
+border: 1.5px solid var(–gray-line);
 border-radius: 8px;
-padding: 0.75rem 1rem;
+padding: 0.75rem 2.8rem 0.75rem 1rem;
 font-family: inherit;
 font-size: 1.1rem;
 font-weight: 700;
-color: white;
-transition: border-color 0.2s;
+color: var(–text);
 -webkit-appearance: none;
+appearance: none;
+transition: border-color 0.2s;
+}
+.input-field:focus { outline: none; border-color: var(–orange); background: #fff; }
+.input-field::placeholder { color: #bbb; font-weight: 400; }
+.input-unit {
+position: absolute;
+right: 0.9rem;
+top: 50%;
+transform: translateY(-50%);
+color: #aaa;
+font-size: 0.85rem;
+pointer-events: none;
 }
 
-.input-field:focus {
-outline: none;
-border-color: var(–tora-orange);
-background: rgba(0,0,0,0.6);
-}
-
-.input-field::placeholder { color: rgba(255,255,255,0.2); }
-
-/* Calc button */
+/* 計算ボタン */
 .calc-btn {
+display: block;
 width: 100%;
-background: linear-gradient(135deg, var(–tora-orange) 0%, #c94d0f 100%);
-color: white;
+background: linear-gradient(135deg, #e8611a 0%, #bf4a0e 100%);
+color: #fff;
 font-family: inherit;
 font-weight: 900;
-font-size: 0.95rem;
-padding: 1rem 1.5rem;
+font-size: 1rem;
+line-height: 1.4;
+padding: 1rem 1.2rem;
 border: none;
 border-radius: 10px;
 cursor: pointer;
-letter-spacing: 0.03em;
-transition: transform 0.15s, box-shadow 0.15s;
-box-shadow: 0 4px 20px rgba(232,97,26,0.4);
-line-height: 1.4;
+letter-spacing: 0.02em;
+box-shadow: 0 3px 14px rgba(232,97,26,0.35);
+transition: transform 0.12s, box-shadow 0.12s;
+margin-top: 0.4rem;
 }
+.calc-btn:active { transform: scale(0.98); box-shadow: none; }
 
-.calc-btn:hover {
-transform: translateY(-2px);
-box-shadow: 0 6px 25px rgba(232,97,26,0.6);
-}
-
-.calc-btn:active { transform: translateY(0); }
-
-/* Results */
+/* 結果エリア */
 #results { display: none; }
 
-/* Highlight number */
-.big-num {
+/* セクションラベル */
+.sec-label {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 0.7rem;
+font-weight: 800;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: #aaa;
+margin: 1.2rem 1rem 0.3rem;
+}
+.sec-label::after {
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–gray-line);
+}
+
+/* 死守ラインカード */
+.deadline-card {
+background: #fffbee;
+border: 1.5px solid #e6c940;
+border-radius: 12px;
+padding: 1.4rem;
+margin: 0.3rem 1rem 0.7rem;
+}
+.deadline-badge {
 display: inline-block;
-color: white;
+background: var(–gold);
+color: #fff;
+font-size: 0.6rem;
+font-weight: 900;
+padding: 0.18rem 0.65rem;
+border-radius: 3px;
+letter-spacing: 0.08em;
+margin-bottom: 0.9rem;
+}
+
+/* リスクカード */
+.risk-card {
+background: #fff7f5;
+border: 1.5px solid #f5c0b0;
+border-radius: 12px;
+padding: 1.4rem;
+margin: 0.3rem 1rem 0.7rem;
+}
+.risk-badge {
+display: block;
+font-size: 0.6rem;
+font-weight: 900;
+color: var(–red);
+letter-spacing: 0.08em;
+margin-bottom: 0.9rem;
+}
+
+/* 希望カード */
+.hope-card {
+background: #f4fbf6;
+border: 1.5px solid #9fdbb8;
+border-radius: 12px;
+padding: 1.4rem;
+margin: 0.3rem 1rem 0.7rem;
+}
+.hope-badge {
+display: block;
+font-size: 0.6rem;
+font-weight: 900;
+color: var(–green);
+letter-spacing: 0.08em;
+margin-bottom: 0.9rem;
+}
+
+/* 結果行 */
+.result-row {
+margin-bottom: 1.1rem;
+padding-bottom: 1rem;
+border-bottom: 1px solid var(–gray-line);
+}
+.result-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+.result-label {
+font-size: 0.76rem;
+color: var(–text-sub);
+font-weight: 700;
+margin-bottom: 0.35rem;
+}
+.result-val-wrap { display: flex; align-items: baseline; gap: 0.35rem; flex-wrap: wrap; }
+.big-num {
 font-size: 2.2rem;
 font-weight: 900;
 line-height: 1;
 letter-spacing: -0.02em;
 }
+.big-num.gold   { color: var(–gold); }
+.big-num.orange { color: var(–orange); }
+.big-num.red    { color: var(–red); }
+.big-num.green  { color: var(–green); }
+.result-unit { font-size: 0.88rem; color: var(–text-sub); }
+.result-note { font-size: 0.7rem; color: #999; margin-top: 0.3rem; }
 
-.big-num.orange { color: var(–tora-orange-light); }
-.big-num.green { color: #6ee7b7; }
-.big-num.red { color: #fc8181; }
-.big-num.gold { color: var(–tora-gold); }
-
-/* Deadline card */
-.deadline-card {
-background: linear-gradient(135deg, #1e1a00 0%, #2a2000 100%);
-border: 2px solid var(–tora-gold);
-border-radius: 12px;
-padding: 1.5rem;
-margin: 1rem;
+/* プログレスバー */
+.prog-wrap {
+background: #eee;
+border-radius: 100px;
+height: 7px;
+margin-top: 0.75rem;
+overflow: hidden;
 }
-
-.deadline-badge {
-background: var(–tora-gold);
-color: #1a1000;
-font-size: 0.65rem;
-font-weight: 900;
-padding: 0.2rem 0.7rem;
-border-radius: 3px;
-letter-spacing: 0.12em;
-display: inline-block;
-margin-bottom: 0.8rem;
+.prog-fill {
+height: 100%;
+border-radius: 100px;
+background: linear-gradient(90deg, var(–orange), var(–orange-lt));
+width: 60%;
 }
-
-/* Risk card */
-.risk-card {
-background: linear-gradient(135deg, #2d0808 0%, #3d1010 100%);
-border: 2px solid rgba(204,34,0,0.5);
-border-radius: 12px;
-padding: 1.5rem;
-margin: 1rem;
-}
-
-/* Hope card */
-.hope-card {
-background: linear-gradient(135deg, #082d1a 0%, #103d24 100%);
-border: 2px solid rgba(110,231,183,0.4);
-border-radius: 12px;
-padding: 1.5rem;
-margin: 1rem;
-}
-
-.result-row {
-margin-bottom: 1.2rem;
-padding-bottom: 1rem;
-border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-
-.result-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-
-.result-label {
-font-size: 0.78rem;
-color: rgba(255,255,255,0.55);
-font-weight: 700;
-margin-bottom: 0.3rem;
-letter-spacing: 0.04em;
-}
-
-.result-value { display: flex; align-items: baseline; gap: 0.4rem; flex-wrap: wrap; }
-.result-unit { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
-.result-note { font-size: 0.72rem; color: rgba(255,255,255,0.4); margin-top: 0.3rem; }
-
-/* Section label */
-.section-label {
+.prog-labels {
 display: flex;
-align-items: center;
-gap: 0.5rem;
-font-size: 0.72rem;
-font-weight: 900;
-letter-spacing: 0.12em;
-text-transform: uppercase;
-color: rgba(255,255,255,0.35);
-margin: 1.5rem 1rem 0.2rem;
+justify-content: space-between;
+font-size: 0.62rem;
+color: #bbb;
+margin-top: 0.25rem;
 }
 
-.section-label::after {
-content: ‘’;
-flex: 1;
-height: 1px;
-background: rgba(255,255,255,0.1);
-}
-
-/* Share button */
+/* シェアボタン */
 .share-btn {
 display: flex;
 align-items: center;
 justify-content: center;
-gap: 0.6rem;
+gap: 0.55rem;
 width: calc(100% - 2rem);
-margin: 0 1rem;
+margin: 0.5rem 1rem 1rem;
 background: #000;
-color: white;
+color: #fff;
 font-family: inherit;
 font-weight: 800;
-font-size: 0.9rem;
-padding: 0.9rem 1.5rem;
-border: 2px solid #333;
+font-size: 0.88rem;
+padding: 0.85rem 1.2rem;
+border: none;
 border-radius: 10px;
 cursor: pointer;
-transition: background 0.2s, border-color 0.2s;
 text-decoration: none;
+transition: background 0.15s;
 }
+.share-btn:active { background: #222; }
 
-.share-btn:hover { background: #111; border-color: #555; }
-
-/* Affiliate section */
-.affiliate-section {
-background: rgba(26,39,68,0.7);
-border-top: 2px solid rgba(232,97,26,0.2);
-padding: 1.5rem 1rem;
-margin-top: 1rem;
+/* アフィリエイト */
+.aff-section {
+background: var(–gray-bg);
+border-top: 1.5px solid var(–gray-line);
+padding: 1.4rem 1rem 1.8rem;
 }
-
-.affiliate-title {
-font-size: 0.85rem;
+.aff-title {
+font-size: 0.82rem;
 font-weight: 800;
-color: var(–tora-orange-light);
+color: var(–navy);
+line-height: 1.6;
 margin-bottom: 1rem;
-line-height: 1.5;
 }
-
-.aff-cards {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 0.6rem;
-}
-
-@media (max-width: 480px) {
-.aff-cards { grid-template-columns: 1fr; }
-}
-
+.aff-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.55rem; }
+@media (max-width: 440px) { .aff-grid { grid-template-columns: 1fr; } }
 .aff-card {
-background: rgba(0,0,0,0.3);
-border: 1px solid rgba(232,97,26,0.2);
-border-radius: 8px;
-padding: 0.8rem;
-text-decoration: none;
-color: #c8d8f0;
-font-size: 0.75rem;
-font-weight: 700;
 display: flex;
 flex-direction: column;
-gap: 0.4rem;
-transition: border-color 0.2s, background 0.2s;
-cursor: pointer;
+gap: 0.3rem;
+background: #fff;
+border: 1.5px solid var(–gray-line);
+border-radius: 8px;
+padding: 0.8rem 0.7rem;
+text-decoration: none;
+color: var(–text);
+font-size: 0.72rem;
+font-weight: 700;
+line-height: 1.4;
+transition: border-color 0.15s;
 }
+.aff-card:active { border-color: var(–orange); }
+.aff-icon { font-size: 1.25rem; }
+.aff-cat  { font-size: 0.6rem; color: #aaa; font-weight: 400; margin-top: 0.1rem; }
 
-.aff-card:hover {
-border-color: var(–tora-orange);
-background: rgba(232,97,26,0.1);
-}
-
-.aff-icon { font-size: 1.3rem; }
-.aff-label { font-size: 0.65rem; color: rgba(255,255,255,0.4); font-weight: 400; }
-
-/* Progress bar */
-.progress-bar-wrap {
-background: rgba(0,0,0,0.3);
-border-radius: 100px;
-height: 8px;
-margin-top: 0.8rem;
-overflow: hidden;
-}
-
-.progress-bar-fill {
-height: 100%;
-border-radius: 100px;
-background: linear-gradient(90deg, var(–tora-orange), var(–tora-orange-light));
-transition: width 0.8s ease;
-}
-
-.progress-label {
-display: flex;
-justify-content: space-between;
-font-size: 0.65rem;
-color: rgba(255,255,255,0.3);
-margin-top: 0.3rem;
-}
-
-/* Footer */
+/* フッター */
 footer {
 text-align: center;
-padding: 1.5rem 1rem;
-font-size: 0.68rem;
-color: rgba(255,255,255,0.2);
-line-height: 1.8;
+padding: 1.4rem 1rem 2rem;
+font-size: 0.65rem;
+color: #bbb;
+line-height: 1.9;
+border-top: 1px solid var(–gray-line);
 }
 </style>
 
 </head>
 <body>
-<div class="content-wrap">
 
-  <!-- Header -->
+<header class="site-header">
+  <div class="logo-badge">🐯 2026年4月新制度対応</div>
+  <h1 class="site-title">とらのあな<em>新制度</em><br>保管料シミュレーター</h1>
+  <p class="site-sub">納品数と本体価格を入れるだけ。保管料免除ラインを確認。</p>
+</header>
 
-  <header class="site-header">
-    <div class="logo-badge">🐯 2026年4月新制度対応</div>
-    <h1 class="site-title">とらのあな<span>新制度</span><br>保管料＆損益シミュレーター</h1>
-    <p style="font-size:0.72rem; color: rgba(255,255,255,0.45); margin-top:0.5rem;">納品数と本体価格を入れるだけ。生存ラインを可視化。</p>
-  </header>
-
-  <!-- Disclaimer -->
-
-  <div class="disclaimer">
-    <span class="disclaimer-title">⚠️【免責事項】</span>
-    本ツールは2026年2月時点の公式規約に基づく「目安」のシミュレーションです。税金の端数処理や13ヶ月目以降の保管料変動などには完全対応していません。計算結果が異なっていた場合でも一切の責任を負いかねますので、必ず公式の最新規約をご自身でご確認ください。
-  </div>
-
-  <!-- Input area -->
-
-  <div class="card">
-    <div class="card-title">
-      <span>📦</span> シミュレーション入力
-    </div>
-
-```
-<div class="input-group">
-  <label class="input-label" for="price">本体価格（税抜）</label>
-  <div style="position:relative;">
-    <input type="number" id="price" class="input-field" placeholder="例：700" min="1" inputmode="numeric">
-    <span style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.35); font-size:0.9rem;">円</span>
-  </div>
+<div class="disclaimer">
+  <span class="disclaimer-title">⚠️【免責事項】</span>
+  本ツールは2026年2月時点の公式規約に基づく「目安」のシミュレーションです。税金の端数処理や13ヶ月目以降の保管料変動などには完全対応していません。計算結果が異なっていた場合でも一切の責任を負いかねますので、必ず公式の最新規約をご自身でご確認ください。
 </div>
 
-<div class="input-group" style="margin-bottom:1.5rem;">
-  <label class="input-label" for="qty">納品予定数</label>
-  <div style="position:relative;">
-    <input type="number" id="qty" class="input-field" placeholder="例：100" min="1" inputmode="numeric">
-    <span style="position:absolute; right:1rem; top:50%; transform:translateY(-50%); color:rgba(255,255,255,0.35); font-size:0.9rem;">冊</span>
+<div class="card">
+  <div class="card-title">📦 シミュレーション入力</div>
+
+  <div class="input-group">
+    <label class="input-label" for="price">本体価格（税抜）</label>
+    <div class="input-wrap">
+      <input type="number" id="price" class="input-field" placeholder="例：700" min="1" inputmode="numeric">
+      <span class="input-unit">円</span>
+    </div>
   </div>
+
+  <div class="input-group">
+    <label class="input-label" for="qty">納品予定数</label>
+    <div class="input-wrap">
+      <input type="number" id="qty" class="input-field" placeholder="例：100" min="1" inputmode="numeric">
+      <span class="input-unit">冊</span>
+    </div>
+  </div>
+
+<button class="calc-btn" onclick="calculate()">シミュレーションする</button>
+
 </div>
 
-<button class="calc-btn" onclick="calculate()">
-  😇 絶望（リスク）と希望（受取額）を<br>シミュレーションする
-</button>
-```
+<div id="results">
 
-  </div>
-
-  <!-- Results -->
-
-  <div id="results">
-
-```
-<!-- ① 絶対死守ライン -->
-<div class="section-label">① 絶対死守ライン</div>
-<div class="deadline-card">
-  <div class="deadline-badge">🚨 MUST SELL — 保管料免除ライン</div>
-  <div class="result-row">
-    <div class="result-label">最低限売らなければいけない冊数（納品数の60%）</div>
-    <div class="result-value">
-      <span class="big-num gold" id="res-must-sell">—</span>
-      <span class="result-unit">冊</span>
+  <div class="sec-label">① 保管料免除ライン</div>
+  <div class="deadline-card">
+    <div class="deadline-badge">🚨 MUST SELL — 保管料無料にするための最低販売数</div>
+    <div class="result-row">
+      <div class="result-label">最低限売らなければいけない冊数（納品数の60%）</div>
+      <div class="result-val-wrap">
+        <span class="big-num gold" id="res-must-sell">—</span>
+        <span class="result-unit">冊</span>
+      </div>
+      <div class="prog-wrap"><div class="prog-fill"></div></div>
+      <div class="prog-labels">
+        <span>0冊</span>
+        <span id="prog-mid">免除ライン (60%)</span>
+        <span id="prog-total">—冊</span>
+      </div>
     </div>
-    <div class="progress-bar-wrap">
-      <div class="progress-bar-fill" id="progress-bar" style="width:60%"></div>
-    </div>
-    <div class="progress-label">
-      <span>0冊</span>
-      <span id="progress-label-mid">免除ライン (60%)</span>
-      <span id="progress-label-total">—冊</span>
+    <div class="result-row">
+      <div class="result-label">上記を売り切った場合のサークル受取額</div>
+      <div class="result-val-wrap">
+        <span class="big-num orange" id="res-must-earn">—</span>
+        <span class="result-unit">円</span>
+      </div>
+      <div class="result-note">※ここから印刷代・交通費等の経費が引かれます</div>
     </div>
   </div>
-  <div class="result-row">
-    <div class="result-label">上記を売り切った場合のサークル受取額</div>
-    <div class="result-value">
-      <span class="big-num orange" id="res-must-earn">—</span>
-      <span class="result-unit">円</span>
+
+  <div class="sec-label">② 売れ残った場合のコスト</div>
+  <div class="risk-card">
+    <div class="risk-badge">⚠️ RISK — 在庫が残った場合にかかる費用</div>
+    <div class="result-row">
+      <div class="result-label">1冊も売れなかった場合の保管料（月額）</div>
+      <div class="result-val-wrap">
+        <span class="big-num red" id="res-storage-monthly">—</span>
+        <span class="result-unit">円 / 月</span>
+      </div>
+      <div class="result-note" id="res-storage-detail"></div>
     </div>
-    <div class="result-note">※ここから印刷代・交通費等の経費が引かれます</div>
+    <div class="result-row">
+      <div class="result-label">全冊返本した場合の返本手数料</div>
+      <div class="result-val-wrap">
+        <span class="big-num red" id="res-return-fee">—</span>
+        <span class="result-unit">円</span>
+      </div>
+      <div class="result-note" id="res-return-detail"></div>
+    </div>
   </div>
+
+  <div class="sec-label">③ 完売した場合の受取額</div>
+  <div class="hope-card">
+    <div class="hope-badge">✨ BEST CASE — 全冊完売できたら</div>
+    <div class="result-row">
+      <div class="result-label">100%完売した場合の最大サークル受取金額</div>
+      <div class="result-val-wrap">
+        <span class="big-num green" id="res-max-earn">—</span>
+        <span class="result-unit">円</span>
+      </div>
+      <div class="result-note">委託手数料30%差し引き後の受取ベース（税抜計算）</div>
+    </div>
+  </div>
+
+  <a id="share-btn" class="share-btn" href="#" target="_blank" rel="noopener noreferrer">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+    </svg>
+    Xでシミュレーション結果を共有する
+  </a>
+
+  <div class="aff-section">
+<div class="aff-grid" id="aff-grid"></div>
+  </div>
+
 </div>
 
-<!-- ② リスク -->
-<div class="section-label">② 売れ残った場合のリスク</div>
-<div class="risk-card">
-  <div style="font-size:0.72rem; font-weight:800; color:#fc8181; letter-spacing:0.1em; margin-bottom:0.8rem;">⚠️ RISK ZONE — こうなったら辛い</div>
-  <div class="result-row">
-    <div class="result-label">1冊も売れず、翌月から発生する保管料（月額）</div>
-    <div class="result-value">
-      <span class="big-num red" id="res-storage-monthly">—</span>
-      <span class="result-unit">円 / 月</span>
-    </div>
-    <div class="result-note" id="res-storage-detail">計算中...</div>
-  </div>
-  <div class="result-row">
-    <div class="result-label">全数売れずに全冊返本した場合の返本手数料</div>
-    <div class="result-value">
-      <span class="big-num red" id="res-return-fee">—</span>
-      <span class="result-unit">円</span>
-    </div>
-    <div class="result-note" id="res-return-detail">計算中...</div>
-  </div>
-</div>
-
-<!-- ③ 完売の希望 -->
-<div class="section-label">③ 完売した場合の希望</div>
-<div class="hope-card">
-  <div style="font-size:0.72rem; font-weight:800; color:#6ee7b7; letter-spacing:0.1em; margin-bottom:0.8rem;">✨ HOPE — 全冊完売できたら</div>
-  <div class="result-row">
-    <div class="result-label">100%完売した場合の最大サークル受取金額</div>
-    <div class="result-value">
-      <span class="big-num green" id="res-max-earn">—</span>
-      <span class="result-unit">円</span>
-    </div>
-    <div class="result-note">委託手数料30%差し引き後の受取ベース（税抜計算）</div>
-  </div>
-</div>
-
-<!-- Share -->
-<a id="share-btn" class="share-btn" href="#" target="_blank" rel="noopener noreferrer">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.63zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-  Xでシミュレーション結果を共有する
-</a>
-
-<!-- Affiliate -->
-<div class="affiliate-section" style="margin-top:1.5rem;">
-  <div class="affiliate-title">📚 本を刷り続ける覚悟があるなら、画力向上からは逃げられない。<br>次の新刊に向けた神教本</div>
-  <div class="aff-cards" id="aff-cards">
-    <!-- Generated by JS -->
-  </div>
-</div>
-```
-
-  </div><!-- /results -->
-
-  <footer>
-    本ツールはとらのあな公式とは無関係の非公式ツールです。<br>
-    計算の正確性は保証しません。必ず公式規約をご確認ください。<br>
-    © 2026 同人サークル応援シミュレーター
-  </footer>
-
-</div><!-- /content-wrap -->
+<footer>
+  本ツールはとらのあな公式とは無関係の非公式ツールです。<br>
+  計算の正確性は保証しません。必ず公式規約をご確認ください。<br>
+  © 2026 同人サークル応援シミュレーター
+</footer>
 
 <script>
 // ============================================================
 // ⚙️ 計算定数 — ここを変更すれば計算に自動反映されます
 // ============================================================
-const COMMISSION_RATE       = 0.30;   // 委託販売手数料率（30%）→ サークル受取率は 1 - COMMISSION_RATE
-const FREE_STORAGE_RATE     = 0.60;   // 保管料免除ラインとなる販売率（60%）
-const STORAGE_UNIT_BOOKS    = 300;    // 保管料課金単位（冊数）
-const STORAGE_UNIT_FEE      = 500;    // 保管料課金単位あたりの月額（円）
-const RETURN_BOX_BOOKS      = 100;    // 1箱あたりの目安冊数（返本料計算用）
-const RETURN_BOX_FEE        = 1500;   // 1箱あたりの返本手数料（円）
+const COMMISSION_RATE    = 0.30;  // 委託販売手数料率（30%）→ 受取率は 1 - COMMISSION_RATE
+const FREE_STORAGE_RATE  = 0.60;  // 保管料免除ライン（販売率60%）
+const STORAGE_UNIT_BOOKS = 300;   // 保管料課金単位（冊）
+const STORAGE_UNIT_FEE   = 500;   // 1単位あたりの月額保管料（円）
+const RETURN_BOX_BOOKS   = 100;   // 1箱あたり目安冊数（返本料計算用）
+const RETURN_BOX_FEE     = 1500;  // 1箱あたり返本手数料（円）
 // ============================================================
 
-function fmt(num) {
-  return Math.floor(num).toLocaleString('ja-JP');
-}
+function fmt(n) { return Math.floor(n).toLocaleString('ja-JP'); }
 
 function calculate() {
   const price = parseFloat(document.getElementById('price').value);
@@ -555,102 +483,65 @@ function calculate() {
     return;
   }
 
-  // --- Core calculations ---
-  const mustSell      = Math.ceil(qty * FREE_STORAGE_RATE);
-  const earnPerBook   = price * (1 - COMMISSION_RATE);
-  const mustEarn      = mustSell * earnPerBook;
-  const maxEarn       = qty * earnPerBook;
-  const storageMonthly = Math.ceil(qty / STORAGE_UNIT_BOOKS) * STORAGE_UNIT_FEE;
-  const returnBoxes   = Math.ceil(qty / RETURN_BOX_BOOKS);
-  const returnFee     = returnBoxes * RETURN_BOX_FEE;
+  const mustSell       = Math.ceil(qty * FREE_STORAGE_RATE);
+  const earnPerBook    = price * (1 - COMMISSION_RATE);
+  const mustEarn       = mustSell * earnPerBook;
+  const maxEarn        = qty * earnPerBook;
+  const storageUnits   = Math.ceil(qty / STORAGE_UNIT_BOOKS);
+  const storageMonthly = storageUnits * STORAGE_UNIT_FEE;
+  const returnBoxes    = Math.ceil(qty / RETURN_BOX_BOOKS);
+  const returnFee      = returnBoxes * RETURN_BOX_FEE;
 
-  // --- Update DOM ---
-  document.getElementById('res-must-sell').textContent  = fmt(mustSell) + '冊';
-  document.getElementById('res-must-earn').textContent  = fmt(mustEarn) + '円';
-  document.getElementById('res-storage-monthly').textContent = fmt(storageMonthly) + '円';
+  document.getElementById('res-must-sell').textContent       = fmt(mustSell);
+  document.getElementById('res-must-earn').textContent       = fmt(mustEarn);
+  document.getElementById('res-storage-monthly').textContent = fmt(storageMonthly);
   document.getElementById('res-storage-detail').textContent  =
-    `残${fmt(qty)}冊 → ${Math.ceil(qty / STORAGE_UNIT_BOOKS)}単位 × ${STORAGE_UNIT_FEE}円`;
-  document.getElementById('res-return-fee').textContent  = fmt(returnFee) + '円';
+    `残${fmt(qty)}冊 → ${storageUnits}単位 × ${STORAGE_UNIT_FEE.toLocaleString()}円`;
+  document.getElementById('res-return-fee').textContent      = fmt(returnFee);
   document.getElementById('res-return-detail').textContent   =
     `返本手数料 ${RETURN_BOX_FEE.toLocaleString()}円 × 推定${returnBoxes}箱分`;
-  document.getElementById('res-max-earn').textContent    = fmt(maxEarn) + '円';
-  document.getElementById('progress-label-total').textContent = qty + '冊';
+  document.getElementById('res-max-earn').textContent        = fmt(maxEarn);
+  document.getElementById('prog-total').textContent          = qty + '冊';
+  document.getElementById('prog-mid').textContent            = `免除ライン ${fmt(mustSell)}冊 (60%)`;
 
-  // Remove the "冊" duplicate from big-num since it's in result-unit
-  // Fix: set just the number in big-num, unit is in result-unit span
-  document.getElementById('res-must-sell').textContent  = fmt(mustSell);
-  document.getElementById('res-must-earn').textContent  = fmt(mustEarn);
-  document.getElementById('res-storage-monthly').textContent = fmt(storageMonthly);
-  document.getElementById('res-return-fee').textContent  = fmt(returnFee);
-  document.getElementById('res-max-earn').textContent    = fmt(maxEarn);
-
-  // Progress bar stays at 60%
-  document.getElementById('progress-bar').style.width = '60%';
-  document.getElementById('progress-label-mid').textContent = `免除ライン ${mustSell}冊 (60%)`;
-
-  // --- Share URL ---
-  const pageUrl = location.href.split('?')[0];
+  const pageUrl   = location.href.split('?')[0];
   const shareText = `とらのあな新制度シミュレーターで計算しました！私の納品予定だと【${fmt(mustSell)}冊】売れないと保管料が発生します😇 #同人作家さんと繋がりたい`;
-  const twitterUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(pageUrl)}`;
-  document.getElementById('share-btn').href = twitterUrl;
+  document.getElementById('share-btn').href =
+    `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(pageUrl)}`;
 
-  // --- Affiliate cards ---
   renderAffCards();
 
-  // --- Show results ---
-  const resultsEl = document.getElementById('results');
-  resultsEl.style.display = 'block';
-  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const results = document.getElementById('results');
+  results.style.display = 'block';
+  setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
 }
 
 function renderAffCards() {
-  const ASIN_ID = 'otaku093-22';
-  const searchBase = 'https://www.amazon.co.jp/s?tag=' + ASIN_ID + '&k=';
-
+  const TAG  = 'otaku093-22';
+  const BASE = 'https://www.amazon.co.jp/s?tag=' + TAG + '&k=';
   const groups = [
-    {
-      keywords: ['"BL ポーズ集"', '"ふたり ポーズ集"'],
-      icons: ['🧑‍🤝‍🧑', '📖'],
-      label: '構図・ポーズ'
-    },
-    {
-      keywords: ['"服のシワ 描き方"', '"背景パース 本"'],
-      icons: ['👗', '🏙️'],
-      label: '服・背景テクニック'
-    },
-    {
-      keywords: ['"イラスト 解剖学"', '"カラー＆ライト"'],
-      icons: ['🦴', '💡'],
-      label: '解剖学・光と影'
-    }
+    { kws: ['BL ポーズ集', 'ふたり ポーズ集'], icons: ['🧑‍🤝‍🧑','📖'], cat: '構図・ポーズ' },
+    { kws: ['服のシワ 描き方', '背景パース 本'],  icons: ['👗','🏙️'],  cat: '服・背景テクニック' },
+    { kws: ['イラスト 解剖学', 'カラー＆ライト'], icons: ['🦴','💡'],  cat: '解剖学・光と影' }
   ];
-
-  const container = document.getElementById('aff-cards');
-  container.innerHTML = '';
-
+  const grid = document.getElementById('aff-grid');
+  grid.innerHTML = '';
   groups.forEach(g => {
-    const pick = Math.floor(Math.random() * g.keywords.length);
-    const kw = g.keywords[pick];
-    const icon = g.icons[pick];
-    const url = searchBase + encodeURIComponent(kw.replace(/"/g, ''));
-
+    const i = Math.floor(Math.random() * g.kws.length);
     const a = document.createElement('a');
-    a.href = url;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
+    a.href      = BASE + encodeURIComponent(g.kws[i]);
+    a.target    = '_blank';
+    a.rel       = 'noopener noreferrer';
     a.className = 'aff-card';
-    a.innerHTML = `
-      <span class="aff-icon">${icon}</span>
-      <span style="font-size:0.78rem; font-weight:800; line-height:1.4;">${kw.replace(/"/g, '')}</span>
-      <span class="aff-label">${g.label} / Amazon検索</span>
-    `;
-    container.appendChild(a);
+    a.innerHTML = `<span class="aff-icon">${g.icons[i]}</span><span>${g.kws[i]}</span><span class="aff-cat">${g.cat} / Amazon検索</span>`;
+    grid.appendChild(a);
   });
 }
 
-// Allow Enter key to trigger calculation
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter') calculate();
+['price','qty'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => {
+    if (e.key === 'Enter') calculate();
+  });
 });
 </script>
 
