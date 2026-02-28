@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title></title>
+<title>とらのあな新制度：保管料シミュレーター</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -24,8 +24,7 @@
 html { font-size: 16px; }
 
 body {
-font-family: ‘Hiragino Maru Gothic ProN’, ‘Hiragino Sans’, ‘Yu Gothic UI’,
-‘BIZ UDGothic’, ‘Meiryo’, sans-serif;
+font-family: ‘Hiragino Maru Gothic ProN’, ‘Hiragino Sans’, ‘Yu Gothic UI’, ‘BIZ UDGothic’, ‘Meiryo’, sans-serif;
 background-color: #fff;
 color: var(–text);
 min-height: 100vh;
@@ -77,7 +76,7 @@ font-size: 0.85rem;
 margin-bottom: 0.35rem;
 }
 
-/* カード */
+/* 入力カード */
 .card {
 background: #fff;
 border: 1.5px solid var(–gray-line);
@@ -145,15 +144,14 @@ border-radius: 10px;
 cursor: pointer;
 letter-spacing: 0.02em;
 box-shadow: 0 3px 14px rgba(232,97,26,0.35);
-transition: transform 0.12s, box-shadow 0.12s;
+transition: transform 0.12s;
 margin-top: 0.4rem;
 }
-.calc-btn:active { transform: scale(0.98); box-shadow: none; }
+.calc-btn:active { transform: scale(0.98); }
 
 /* 結果エリア */
 #results { display: none; }
 
-/* セクションラベル */
 .sec-label {
 display: flex;
 align-items: center;
@@ -297,7 +295,6 @@ transition: background 0.15s;
 }
 .share-btn:active { background: #222; }
 
-/* アフィリエイト */
 /* アフィリエイト（収納ケース提案） */
 .aff-section {
 background: var(–gray-bg);
@@ -434,20 +431,20 @@ border-top: 1px solid var(–gray-line);
     <div class="result-row">
       <div class="result-label">最低限売らなければいけない冊数（納品数の60%）</div>
       <div class="result-val-wrap">
-        <span class="big-num gold" id="res-must-sell">—</span>
+        <span class="big-num gold" id="res-must-sell">0</span>
         <span class="result-unit">冊</span>
       </div>
       <div class="prog-wrap"><div class="prog-fill"></div></div>
       <div class="prog-labels">
         <span>0冊</span>
         <span id="prog-mid">免除ライン (60%)</span>
-        <span id="prog-total">—冊</span>
+        <span id="prog-total">0冊</span>
       </div>
     </div>
     <div class="result-row">
       <div class="result-label">上記を売り切った場合のサークル受取額</div>
       <div class="result-val-wrap">
-        <span class="big-num orange" id="res-must-earn">—</span>
+        <span class="big-num orange" id="res-must-earn">0</span>
         <span class="result-unit">円</span>
       </div>
       <div class="result-note">※ここから印刷代・交通費等の経費が引かれます</div>
@@ -460,7 +457,7 @@ border-top: 1px solid var(–gray-line);
     <div class="result-row">
       <div class="result-label">1冊も売れなかった場合の保管料（月額）</div>
       <div class="result-val-wrap">
-        <span class="big-num red" id="res-storage-monthly">—</span>
+        <span class="big-num red" id="res-storage-monthly">0</span>
         <span class="result-unit">円 / 月</span>
       </div>
       <div class="result-note" id="res-storage-detail"></div>
@@ -468,7 +465,7 @@ border-top: 1px solid var(–gray-line);
     <div class="result-row">
       <div class="result-label">全冊返本した場合の返本手数料</div>
       <div class="result-val-wrap">
-        <span class="big-num red" id="res-return-fee">—</span>
+        <span class="big-num red" id="res-return-fee">0</span>
         <span class="result-unit">円</span>
       </div>
       <div class="result-note" id="res-return-detail"></div>
@@ -481,7 +478,7 @@ border-top: 1px solid var(–gray-line);
     <div class="result-row">
       <div class="result-label">100%完売した場合の最大サークル受取金額</div>
       <div class="result-val-wrap">
-        <span class="big-num green" id="res-max-earn">—</span>
+        <span class="big-num green" id="res-max-earn">0</span>
         <span class="result-unit">円</span>
       </div>
       <div class="result-note">委託手数料30%差し引き後の受取ベース（税抜計算）</div>
@@ -499,7 +496,6 @@ border-top: 1px solid var(–gray-line);
     <div class="aff-section-title">📦 自宅に在庫を引き上げるなら。同人誌がシンデレラフィットする最強ケース</div>
 
 ```
-<!-- 商品1：B5縦置き用 -->
 <div class="prod-card">
   <div class="prod-tag">B5縦置き用</div>
   <div class="prod-title">B5を「立てて」綺麗に収納したい場合</div>
@@ -511,7 +507,6 @@ border-top: 1px solid var(–gray-line);
   <a class="prod-btn" href="https://www.amazon.co.jp/s?k=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81+%E3%83%9D%E3%83%AA%E3%83%97%E3%83%AD%E3%83%94%E3%83%AC%E3%83%B3%E8%BF%BD%E5%8A%A0%E7%94%A8%E3%82%B9%E3%83%88%E3%83%83%E3%82%AB%E3%83%BC+%E6%B7%B1%E5%9E%8B&tag=otaku093-22" target="_blank" rel="noopener noreferrer">Amazonでこのストッカーを探す</a>
 </div>
 
-<!-- 商品2：A5二列・B5平積み用 -->
 <div class="prod-card">
   <div class="prod-tag">A5二列 / B5平積み用</div>
   <div class="prod-title">A5を2列、またはB5を「平積み」でたっぷり収納したい場合</div>
@@ -531,65 +526,66 @@ border-top: 1px solid var(–gray-line);
 <footer>
   本ツールはとらのあな公式とは無関係の非公式ツールです。<br>
   計算の正確性は保証しません。必ず公式規約をご確認ください。<br>
-  © 2026 同人サークル応援シミュレーター
+  &copy; 2026 同人サークル応援シミュレーター
 </footer>
 
 <script>
 // ============================================================
-// ⚙️ 計算定数 — ここを変更すれば計算に自動反映されます
+// 計算定数 — ここを変更すれば計算に自動反映されます
 // ============================================================
-const COMMISSION_RATE    = 0.30;  // 委託販売手数料率（30%）→ 受取率は 1 - COMMISSION_RATE
-const FREE_STORAGE_RATE  = 0.60;  // 保管料免除ライン（販売率60%）
-const STORAGE_UNIT_BOOKS = 300;   // 保管料課金単位（冊）
-const STORAGE_UNIT_FEE   = 500;   // 1単位あたりの月額保管料（円）
-const RETURN_BOX_BOOKS   = 100;   // 1箱あたり目安冊数（返本料計算用）
-const RETURN_BOX_FEE     = 1500;  // 1箱あたり返本手数料（円）
+var COMMISSION_RATE    = 0.30;  // 委託販売手数料率（30%）
+var FREE_STORAGE_RATE  = 0.60;  // 保管料免除ライン（販売率60%）
+var STORAGE_UNIT_BOOKS = 300;   // 保管料課金単位（冊）
+var STORAGE_UNIT_FEE   = 500;   // 1単位あたりの月額保管料（円）
+var RETURN_BOX_BOOKS   = 100;   // 1箱あたり目安冊数（返本料計算用）
+var RETURN_BOX_FEE     = 1500;  // 1箱あたり返本手数料（円）
 // ============================================================
 
-function fmt(n) { return Math.floor(n).toLocaleString('ja-JP'); }
+function fmt(n) {
+  return Math.floor(n).toLocaleString('ja-JP');
+}
 
 function calculate() {
-  const price = parseFloat(document.getElementById('price').value);
-  const qty   = parseInt(document.getElementById('qty').value, 10);
+  var price = parseFloat(document.getElementById('price').value);
+  var qty   = parseInt(document.getElementById('qty').value, 10);
 
   if (!price || !qty || price <= 0 || qty <= 0) {
     alert('本体価格と納品予定数を正しく入力してください。');
     return;
   }
 
-  const mustSell       = Math.ceil(qty * FREE_STORAGE_RATE);
-  const earnPerBook    = price * (1 - COMMISSION_RATE);
-  const mustEarn       = mustSell * earnPerBook;
-  const maxEarn        = qty * earnPerBook;
-  const storageUnits   = Math.ceil(qty / STORAGE_UNIT_BOOKS);
-  const storageMonthly = storageUnits * STORAGE_UNIT_FEE;
-  const returnBoxes    = Math.ceil(qty / RETURN_BOX_BOOKS);
-  const returnFee      = returnBoxes * RETURN_BOX_FEE;
+  var mustSell       = Math.ceil(qty * FREE_STORAGE_RATE);
+  var earnPerBook    = price * (1 - COMMISSION_RATE);
+  var mustEarn       = mustSell * earnPerBook;
+  var maxEarn        = qty * earnPerBook;
+  var storageUnits   = Math.ceil(qty / STORAGE_UNIT_BOOKS);
+  var storageMonthly = storageUnits * STORAGE_UNIT_FEE;
+  var returnBoxes    = Math.ceil(qty / RETURN_BOX_BOOKS);
+  var returnFee      = returnBoxes * RETURN_BOX_FEE;
 
   document.getElementById('res-must-sell').textContent       = fmt(mustSell);
   document.getElementById('res-must-earn').textContent       = fmt(mustEarn);
   document.getElementById('res-storage-monthly').textContent = fmt(storageMonthly);
-  document.getElementById('res-storage-detail').textContent  =
-    `残${fmt(qty)}冊 → ${storageUnits}単位 × ${STORAGE_UNIT_FEE.toLocaleString()}円`;
+  document.getElementById('res-storage-detail').textContent  = '残' + fmt(qty) + '冊 → ' + storageUnits + '単位 × ' + STORAGE_UNIT_FEE.toLocaleString() + '円';
   document.getElementById('res-return-fee').textContent      = fmt(returnFee);
-  document.getElementById('res-return-detail').textContent   =
-    `返本手数料 ${RETURN_BOX_FEE.toLocaleString()}円 × 推定${returnBoxes}箱分`;
+  document.getElementById('res-return-detail').textContent   = '返本手数料 ' + RETURN_BOX_FEE.toLocaleString() + '円 × 推定' + returnBoxes + '箱分';
   document.getElementById('res-max-earn').textContent        = fmt(maxEarn);
   document.getElementById('prog-total').textContent          = qty + '冊';
-  document.getElementById('prog-mid').textContent            = `免除ライン ${fmt(mustSell)}冊 (60%)`;
+  document.getElementById('prog-mid').textContent            = '免除ライン ' + fmt(mustSell) + '冊 (60%)';
 
-  const pageUrl   = location.href.split('?')[0];
-  const shareText = `とらのあな新制度シミュレーターで計算しました！私の納品予定だと【${fmt(mustSell)}冊】売れないと保管料が発生します😇 #同人作家さんと繋がりたい`;
-  document.getElementById('share-btn').href =
-    `https://x.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(pageUrl)}`;
+  var pageUrl   = location.href.split('?')[0];
+  var shareText = 'とらのあな新制度シミュレーターで計算しました！私の納品予定だと【' + fmt(mustSell) + '冊】売れないと保管料が発生します😇 #同人作家さんと繋がりたい';
+  document.getElementById('share-btn').href = 'https://x.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(pageUrl);
 
-  const results = document.getElementById('results');
+  var results = document.getElementById('results');
   results.style.display = 'block';
-  setTimeout(() => results.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+  setTimeout(function() {
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 50);
 }
 
-['price','qty'].forEach(id => {
-  document.getElementById(id).addEventListener('keydown', e => {
+['price', 'qty'].forEach(function(id) {
+  document.getElementById(id).addEventListener('keydown', function(e) {
     if (e.key === 'Enter') calculate();
   });
 });
