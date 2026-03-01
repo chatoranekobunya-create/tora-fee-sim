@@ -262,7 +262,7 @@ overflow: hidden;
 .prog-fill {
 height: 100%;
 border-radius: 100px;
-background: linear-gradient(90deg, var(–orange), var(–orange-lt));
+background: linear-gradient(90deg, #E8611A, #FF8C42);
 width: 60%;
 }
 .prog-labels {
@@ -618,7 +618,7 @@ border-top: 1px solid var(–gray-line);
   <div class="deadline-card">
     <div class="deadline-badge">🚨 MUST SELL — 保管料無料にするための最低販売数</div>
     <div class="result-row">
-      <div class="result-label">最低限売らなければいけない冊数（納品数の60%）</div>
+      <div class="result-label" id="res-must-label">最低限売らなければいけない冊数（納品数の60%）</div>
       <div class="result-val-wrap">
         <span class="big-num gold" id="res-must-sell">0</span>
         <span class="result-unit">冊</span>
@@ -642,7 +642,7 @@ border-top: 1px solid var(–gray-line);
 
   <div class="sec-label">② 完売までのノルマ表（毎月60%の推移）</div>
   <div class="norma-card">
-    <div class="norma-card-title">📅 あなたの在庫、何ヶ月で売り切れる？</div>
+    <div class="norma-card-title" id="norma-card-title">📅 あなたの在庫、何ヶ月で売り切れる？</div>
     <div class="norma-route-wrap" id="norma-routes">
       <!-- JSで動的生成 -->
     </div>
@@ -791,6 +791,11 @@ function calculate() {
 
   document.getElementById('res-must-sell').textContent       = fmt(mustSell);
   document.getElementById('res-must-earn').textContent       = fmt(mustEarn);
+  // 1: ラベルに納品数を反映
+  document.getElementById('res-must-label').textContent      = '最低限売らなければいけない冊数（納品数' + qty + '冊の60%）';
+  // 4: 免除ライン復活
+  document.getElementById('prog-total').textContent          = qty + '冊';
+  document.getElementById('prog-mid').textContent            = '免除ライン ' + fmt(mustSell) + '冊 (60%)';
   document.getElementById('res-storage-monthly').textContent = fmt(storageMonthly);
   document.getElementById('res-storage-detail').textContent  = '残' + fmt(qty) + '冊 → ' + storageUnits + '単位 × ' + STORAGE_UNIT_FEE.toLocaleString() + '円';
   document.getElementById('res-return-fee').textContent      = fmt(returnFee);
@@ -819,13 +824,14 @@ function calculate() {
     coverNoteEl.textContent = '※月にこれだけ売れれば、利益（' + coverEarn + '円）でその月の保管料をカバーできます（赤字回避）';
     coverNoteEl.style.color = '#999';
   }
-  document.getElementById('res-max-earn').textContent        = fmt(maxEarn);
-  document.getElementById('prog-total').textContent          = qty + '冊';
-  document.getElementById('prog-mid').textContent            = '免除ライン ' + fmt(mustSell) + '冊 (60%)';
+  document.getElementById('res-max-earn').textContent = fmt(maxEarn);
 
   var pageUrl   = location.href.split('?')[0];
   var shareText = 'とらのあな新制度シミュレーターで計算しました！私の納品予定だと【' + fmt(mustSell) + '冊】売れないと保管料が発生します😇 #同人作家さんと繋がりたい';
   document.getElementById('share-btn').href = 'https://x.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(pageUrl);
+
+  // 2: ノルマ表タイトルに納品数を反映
+  document.getElementById('norma-card-title').textContent    = '📅 あなたの在庫' + qty + '冊、何ヶ月で売り切れる？';
 
   // ノルマ表を生成
   renderNormaTable(qty);
@@ -853,7 +859,7 @@ function renderNormaTable(qty) {
   routeA.className = 'norma-route route-a';
 
   var badgeA = '<span class="norma-route-badge">ルートA</span>';
-  var nameA  = '<div class="norma-route-name">売り切りチャレンジプラン：毎月60%売り続けた場合</div>';
+  var nameA  = '<div class="norma-route-name">売り切りチャレンジプラン（納品数' + qty + '冊）：毎月60%売り続けた場合</div>';
   var listA  = '<div class="norma-list" id="norma-list-a"></div>';
   routeA.innerHTML = badgeA + nameA + listA;
   wrap.appendChild(routeA);
