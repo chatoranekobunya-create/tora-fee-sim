@@ -556,6 +556,110 @@ color: var(–red);
 font-size: 0.95rem;
 }
 
+/* 3社比較シミュレーション */
+.comp-section {
+margin: 0.3rem 1rem 0.7rem;
+display: flex;
+flex-direction: column;
+gap: 0.9rem;
+}
+.comp-intro {
+font-size: 0.76rem;
+color: var(–text-sub);
+line-height: 1.65;
+background: #f8f8f8;
+border-radius: 8px;
+padding: 0.7rem 0.9rem;
+margin-bottom: 0.1rem;
+}
+.comp-card {
+border-radius: 12px;
+padding: 1.1rem 1.1rem 1rem;
+border: 1.5px solid #ddd;
+}
+.comp-card.tora  { background: #fffbee; border-color: #e6c940; }
+.comp-card.frm   { background: #f0fff4; border-color: #6fcf97; }
+.comp-card.booth { background: #fff4f4; border-color: #e09090; }
+
+.comp-header {
+display: flex;
+align-items: center;
+gap: 0.55rem;
+margin-bottom: 0.75rem;
+flex-wrap: wrap;
+}
+.comp-badge {
+display: inline-block;
+font-size: 0.6rem;
+font-weight: 900;
+letter-spacing: 0.08em;
+padding: 0.15rem 0.65rem;
+border-radius: 3px;
+color: #fff !important;
+}
+.tora  .comp-badge { background: #C49000; }
+.frm   .comp-badge { background: #27ae60; }
+.booth .comp-badge { background: #c0392b; }
+
+.comp-name {
+font-size: 0.82rem;
+font-weight: 900;
+color: var(–text);
+}
+.comp-total-wrap {
+display: flex;
+align-items: baseline;
+gap: 0.4rem;
+margin-bottom: 0.8rem;
+}
+.comp-total-label {
+font-size: 0.72rem;
+color: var(–text-sub);
+font-weight: 700;
+}
+.comp-total-num {
+font-size: 1.9rem;
+font-weight: 900;
+line-height: 1;
+letter-spacing: -0.02em;
+}
+.comp-total-num.zero { color: #27ae60; }
+.comp-total-num.low  { color: #e67e22; }
+.comp-total-num.high { color: #c0392b; }
+.comp-total-unit { font-size: 0.8rem; color: var(–text-sub); }
+
+.comp-list {
+display: flex;
+flex-direction: column;
+gap: 0.3rem;
+}
+.comp-row {
+display: flex;
+align-items: flex-start;
+gap: 0.4rem;
+font-size: 0.73rem;
+line-height: 1.5;
+padding: 0.3rem 0.45rem;
+border-radius: 5px;
+}
+.comp-row.fee-ok   { background: rgba(39,174,96,0.08); }
+.comp-row.fee-bad  { background: rgba(192,57,43,0.08); }
+.comp-month {
+flex-shrink: 0;
+width: 4rem;
+font-weight: 800;
+color: #555;
+}
+.comp-sell { color: var(–text); }
+.comp-fee-ok  { color: #27ae60; font-weight: 700; white-space: nowrap; }
+.comp-fee-bad { color: #c0392b; font-weight: 700; white-space: nowrap; }
+.comp-note {
+font-size: 0.68rem;
+color: #888;
+margin-top: 0.55rem;
+line-height: 1.6;
+}
+
 /* フッター */
 footer {
 text-align: center;
@@ -608,6 +712,14 @@ border-top: 1px solid var(–gray-line);
     </div>
   </div>
 
+  <div class="input-group">
+    <label class="input-label" for="expected-rate">毎月、残りの在庫の何%くらい売れそうか？（予測）</label>
+    <div class="input-wrap">
+      <input type="number" id="expected-rate" class="input-field" placeholder="例：20" min="1" max="100" value="20" inputmode="numeric">
+      <span class="input-unit">%</span>
+    </div>
+  </div>
+
 <button class="calc-btn" onclick="calculate()">シミュレーションする</button>
 
 </div>
@@ -640,12 +752,9 @@ border-top: 1px solid var(–gray-line);
     </div>
   </div>
 
-  <div class="sec-label">② 完売までのノルマ表（毎月60%の推移）</div>
-  <div class="norma-card">
-    <div class="norma-card-title" id="norma-card-title">📅 あなたの在庫、何ヶ月で売り切れる？</div>
-    <div class="norma-route-wrap" id="norma-routes">
-      <!-- JSで動的生成 -->
-    </div>
+  <div class="sec-label">② 委託先3社の6ヶ月比較シミュレーション</div>
+  <div class="comp-section" id="comp-section">
+    <!-- JSで動的生成 -->
   </div>
 
   <div class="sec-label">③ 売れ残った場合のコスト</div>
@@ -830,11 +939,10 @@ function calculate() {
   var shareText = 'とらのあな新制度シミュレーターで計算しました！私の納品予定だと【' + fmt(mustSell) + '冊】売れないと保管料が発生します😇 #同人作家さんと繋がりたい';
   document.getElementById('share-btn').href = 'https://x.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(pageUrl);
 
-  // 2: ノルマ表タイトルに納品数を反映
-  document.getElementById('norma-card-title').textContent    = '📅 あなたの在庫' + qty + '冊、何ヶ月で売り切れる？';
-
-  // ノルマ表を生成
-  renderNormaTable(qty);
+  // 2: 3社比較シミュレーション生成
+  var expectedRate = parseInt(document.getElementById('expected-rate').value, 10) || 20;
+  document.getElementById('norma-card-title') && (document.getElementById('norma-card-title').textContent = '');
+  renderComparison(qty, expectedRate);
 
   // 再計算ボックス初期値セット＆イベント登録
   var leftoverEl = document.getElementById('leftover-qty');
@@ -850,73 +958,94 @@ function calculate() {
   }, 50);
 }
 
-function renderNormaTable(qty) {
-  var wrap = document.getElementById('norma-routes');
+function renderComparison(qty, rate) {
+  var wrap = document.getElementById('comp-section');
   wrap.innerHTML = '';
 
-  // ---- ルートA ----
-  var routeA = document.createElement('div');
-  routeA.className = 'norma-route route-a';
+  // イントロ
+  var intro = document.createElement('div');
+  intro.className = 'comp-intro';
+  intro.innerHTML = '納品数 <strong>' + qty + '冊</strong>、毎月 <strong>' + rate + '%</strong> ずつ売れた場合の6ヶ月間の保管料合計を3社で比較します。';
+  wrap.appendChild(intro);
 
-  var badgeA = '<span class="norma-route-badge">ルートA</span>';
-  var nameA  = '<div class="norma-route-name">売り切りチャレンジプラン（納品数' + qty + '冊）：毎月60%売り続けた場合</div>';
-  var listA  = '<div class="norma-list" id="norma-list-a"></div>';
-  routeA.innerHTML = badgeA + nameA + listA;
-  wrap.appendChild(routeA);
+  // 各社の定義
+  var companies = [
+    {
+      key: 'tora',
+      badge: 'とらのあな',
+      name: 'とらのあな（2026年新制度）',
+      calc: function(stock, sold) {
+        var norma = Math.ceil(stock * 0.6);
+        var fee = sold < norma ? Math.ceil(stock / 300) * 500 : 0;
+        return fee;
+      },
+      note: '※ノルマ（月初在庫の60%）未達の月に保管料が発生します。'
+    },
+    {
+      key: 'frm',
+      badge: 'フロマージュ',
+      name: 'フロマージュ（メロンブックス）',
+      calc: function(stock, sold) { return 0; },
+      note: '※月額保管料は無料ですが、返本時に1箱550円（目安）の送料がかかります。'
+    },
+    {
+      key: 'booth',
+      badge: 'BOOTH倉庫',
+      name: 'BOOTH（倉庫サービス）',
+      calc: function(stock, sold) {
+        var norma = Math.ceil(stock * 0.2);
+        return sold < norma ? 1100 : 0;
+      },
+      note: '※月の販売数が月初在庫の20%未満の場合、月額1,100円の保管料が発生します。'
+    }
+  ];
 
-  var listAEl = document.getElementById('norma-list-a');
-  var stock = qty;
-  var month = 1;
-  while (stock > 0 && month <= 24) {
-    var sell = Math.ceil(stock * 0.6);
-    if (sell > stock) sell = stock;
-    var rest = stock - sell;
-    var row = document.createElement('div');
-    row.className = 'norma-row';
+  companies.forEach(function(co) {
+    var card = document.createElement('div');
+    card.className = 'comp-card ' + co.key;
 
-    var restText = rest > 0 ? '残り' + rest + '冊' : '';
-    var doneText = rest === 0 ? '<span class="norma-done">✅ 完売！</span>' : '';
-    row.innerHTML =
-      '<span class="norma-month">' + month + 'ヶ月目</span>' +
-      '<span class="norma-sell">' + sell + '冊</span>' +
-      (restText ? '<span class="norma-rest">（' + restText + '）</span>' : '') +
-      doneText;
-    listAEl.appendChild(row);
-    stock = rest;
-    month++;
-  }
+    // ヘッダー
+    var header = '<div class="comp-header">' +
+      '<span class="comp-badge">' + co.badge + '</span>' +
+      '<span class="comp-name">' + co.name + '</span>' +
+      '</div>';
 
-  // ---- ルートB ----
-  var routeB = document.createElement('div');
-  routeB.className = 'norma-route route-b';
+    // 6ヶ月ループ計算
+    var stock = qty;
+    var totalFee = 0;
+    var rows = '';
 
-  var badgeB  = '<span class="norma-route-badge">ルートB</span>';
-  var nameB   = '<div class="norma-route-name">販売協力プラン：5ヶ月間の猶予後にノルマ開始</div>';
-  var noticeB = '<div class="norma-b-notice">※現在、公式規約において「販売協力」の具体的な内容は明記されていません（詳細は不明です）。</div>';
-  var listB   = '<div class="norma-list" id="norma-list-b"></div>';
-  routeB.innerHTML = badgeB + nameB + noticeB + listB;
-  wrap.appendChild(routeB);
+    for (var m = 1; m <= 6; m++) {
+      var sold = Math.min(Math.floor(stock * (rate / 100)), stock);
+      var fee  = co.calc(stock, sold);
+      totalFee += fee;
+      var rest = stock - sold;
+      var feeClass  = fee > 0 ? 'comp-fee-bad' : 'comp-fee-ok';
+      var rowClass   = fee > 0 ? 'fee-bad' : 'fee-ok';
+      var feeText    = fee > 0 ? '保管料: ' + fee.toLocaleString('ja-JP') + '円 ⚠️' : '保管料: 無料 ✅';
+      rows += '<div class="comp-row ' + rowClass + '">' +
+        '<span class="comp-month">' + m + 'ヶ月目</span>' +
+        '<span class="comp-sell">' + sold + '冊販売（残' + rest + '冊）　</span>' +
+        '<span class="' + feeClass + '">' + feeText + '</span>' +
+        '</div>';
+      stock = rest;
+      if (stock <= 0) break;
+    }
 
-  var listBEl = document.getElementById('norma-list-b');
+    // 合計表示の色分け
+    var totalClass = totalFee === 0 ? 'zero' : totalFee <= 2000 ? 'low' : 'high';
 
-  // 1〜5ヶ月目：免除
-  for (var m = 1; m <= 5; m++) {
-    var freeRow = document.createElement('div');
-    freeRow.className = 'norma-row norma-row-free';
-    freeRow.innerHTML =
-      '<span class="norma-month">' + m + 'ヶ月目</span>' +
-      '<span class="norma-free-label">ノルマ0冊（保管料免除）</span>';
-    listBEl.appendChild(freeRow);
-  }
+    var totalBlock = '<div class="comp-total-wrap">' +
+      '<span class="comp-total-label">6ヶ月間の合計保管料</span>' +
+      '<span class="comp-total-num ' + totalClass + '">' + totalFee.toLocaleString('ja-JP') + '</span>' +
+      '<span class="comp-total-unit">円</span>' +
+      '</div>';
 
-  // 6ヶ月目以降の警告
-  var firstNorma = Math.ceil(qty * 0.6);
-  var warnDiv = document.createElement('div');
-  warnDiv.className = 'norma-b-warn';
-  warnDiv.innerHTML =
-    '<span class="norma-b-warn-icon">🚨</span>' +
-    '<span>6ヶ月目から強制的にルートAへ移行！その時点で全く売れていなければ、納品数と同じ<strong>' + qty + '冊</strong>の在庫に対して毎月60%のノルマが発生します。<br>最初のノルマ：<strong>' + firstNorma + '冊</strong></span>';
-  listBEl.appendChild(warnDiv);
+    card.innerHTML = header + totalBlock +
+      '<div class="comp-list">' + rows + '</div>' +
+      '<div class="comp-note">' + co.note + '</div>';
+    wrap.appendChild(card);
+  });
 }
 
 function recalcReturnFee() {
