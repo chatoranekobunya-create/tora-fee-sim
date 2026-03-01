@@ -375,6 +375,124 @@ transition: opacity 0.15s;
 }
 .prod-btn:active { opacity: 0.85; }
 
+/* ノルマ表カード */
+.norma-card {
+background: #fff;
+border: 1.5px solid var(–gray-line);
+border-radius: 12px;
+padding: 1.3rem 1.2rem;
+margin: 0.3rem 1rem 0.7rem;
+}
+.norma-card-title {
+font-size: 0.88rem;
+font-weight: 900;
+color: var(–navy);
+margin-bottom: 1rem;
+line-height: 1.5;
+}
+.norma-route-wrap {
+display: flex;
+flex-direction: column;
+gap: 0.9rem;
+}
+.norma-route {
+border-radius: 8px;
+padding: 0.95rem 1rem;
+}
+.norma-route.route-a {
+background: #f0f4ff;
+border: 1.5px solid #a8bcec;
+}
+.norma-route.route-b {
+background: #fff5f0;
+border: 1.5px solid #f5c0a0;
+}
+.norma-route-badge {
+display: inline-block;
+font-size: 0.6rem;
+font-weight: 900;
+letter-spacing: 0.08em;
+padding: 0.15rem 0.6rem;
+border-radius: 3px;
+margin-bottom: 0.6rem;
+}
+.route-a .norma-route-badge { background: var(–navy); color: #fff; }
+.route-b .norma-route-badge { background: var(–orange); color: #fff; }
+.norma-route-name {
+font-size: 0.8rem;
+font-weight: 800;
+color: var(–text);
+margin-bottom: 0.7rem;
+line-height: 1.4;
+}
+.norma-list {
+display: flex;
+flex-direction: column;
+gap: 0.3rem;
+}
+.norma-row {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 0.76rem;
+line-height: 1.5;
+}
+.norma-month {
+flex-shrink: 0;
+width: 4.2rem;
+font-weight: 800;
+color: var(–navy);
+font-size: 0.72rem;
+}
+.norma-sell {
+font-weight: 900;
+color: var(–orange);
+font-size: 0.88rem;
+white-space: nowrap;
+}
+.norma-rest {
+font-size: 0.68rem;
+color: var(–text-sub);
+white-space: nowrap;
+}
+.norma-done {
+font-size: 0.72rem;
+font-weight: 900;
+color: var(–green);
+}
+.norma-row-free {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 0.76rem;
+background: rgba(255,255,255,0.65);
+border-radius: 5px;
+padding: 0.25rem 0.5rem;
+}
+.norma-row-free .norma-month {
+color: #888;
+font-weight: 700;
+}
+.norma-free-label {
+font-size: 0.72rem;
+color: #888;
+}
+.norma-b-warn {
+display: flex;
+gap: 0.4rem;
+align-items: flex-start;
+background: #ffeaea;
+border: 1.5px solid #e08080;
+border-radius: 6px;
+padding: 0.6rem 0.75rem;
+margin-top: 0.65rem;
+font-size: 0.76rem;
+line-height: 1.65;
+color: #8b0000;
+font-weight: 700;
+}
+.norma-b-warn-icon { flex-shrink: 0; }
+
 /* フッター */
 footer {
 text-align: center;
@@ -451,7 +569,15 @@ border-top: 1px solid var(–gray-line);
     </div>
   </div>
 
-  <div class="sec-label">② 売れ残った場合のコスト</div>
+  <div class="sec-label">② 完売までのノルマ表（毎月60%の推移）</div>
+  <div class="norma-card">
+    <div class="norma-card-title">📅 あなたの在庫、何ヶ月で売り切れる？</div>
+    <div class="norma-route-wrap" id="norma-routes">
+      <!-- JSで動的生成 -->
+    </div>
+  </div>
+
+  <div class="sec-label">③ 売れ残った場合のコスト</div>
   <div class="risk-card">
     <div class="risk-badge">⚠️ RISK — 在庫が残った場合にかかる費用</div>
     <div class="result-row">
@@ -480,7 +606,7 @@ border-top: 1px solid var(–gray-line);
     </div>
   </div>
 
-  <div class="sec-label">③ 完売した場合の受取額</div>
+  <div class="sec-label">④ 完売した場合の受取額</div>
   <div class="hope-card">
     <div class="hope-badge">✨ BEST CASE — 全冊完売できたら</div>
     <div class="result-row">
@@ -606,11 +732,82 @@ function calculate() {
   var shareText = 'とらのあな新制度シミュレーターで計算しました！私の納品予定だと【' + fmt(mustSell) + '冊】売れないと保管料が発生します😇 #同人作家さんと繋がりたい';
   document.getElementById('share-btn').href = 'https://x.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(pageUrl);
 
+  // ノルマ表を生成
+  renderNormaTable(qty);
+
   var results = document.getElementById('results');
   results.style.display = 'block';
   setTimeout(function() {
     results.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 50);
+}
+
+function renderNormaTable(qty) {
+  var wrap = document.getElementById('norma-routes');
+  wrap.innerHTML = '';
+
+  // ---- ルートA ----
+  var routeA = document.createElement('div');
+  routeA.className = 'norma-route route-a';
+
+  var badgeA = '<span class="norma-route-badge">ルートA</span>';
+  var nameA  = '<div class="norma-route-name">売り切りチャレンジプラン：毎月60%売り続けた場合</div>';
+  var listA  = '<div class="norma-list" id="norma-list-a"></div>';
+  routeA.innerHTML = badgeA + nameA + listA;
+  wrap.appendChild(routeA);
+
+  var listAEl = document.getElementById('norma-list-a');
+  var stock = qty;
+  var month = 1;
+  while (stock > 0 && month <= 24) {
+    var sell = Math.ceil(stock * 0.6);
+    if (sell > stock) sell = stock;
+    var rest = stock - sell;
+    var row = document.createElement('div');
+    row.className = 'norma-row';
+
+    var restText = rest > 0 ? '残り' + rest + '冊' : '';
+    var doneText = rest === 0 ? '<span class="norma-done">✅ 完売！</span>' : '';
+    row.innerHTML =
+      '<span class="norma-month">' + month + 'ヶ月目</span>' +
+      '<span class="norma-sell">' + sell + '冊</span>' +
+      (restText ? '<span class="norma-rest">（' + restText + '）</span>' : '') +
+      doneText;
+    listAEl.appendChild(row);
+    stock = rest;
+    month++;
+  }
+
+  // ---- ルートB ----
+  var routeB = document.createElement('div');
+  routeB.className = 'norma-route route-b';
+
+  var badgeB = '<span class="norma-route-badge">ルートB</span>';
+  var nameB  = '<div class="norma-route-name">販売協力プラン：5ヶ月間の猶予後にノルマ開始</div>';
+  var listB  = '<div class="norma-list" id="norma-list-b"></div>';
+  routeB.innerHTML = badgeB + nameB + listB;
+  wrap.appendChild(routeB);
+
+  var listBEl = document.getElementById('norma-list-b');
+
+  // 1〜5ヶ月目：免除
+  for (var m = 1; m <= 5; m++) {
+    var freeRow = document.createElement('div');
+    freeRow.className = 'norma-row norma-row-free';
+    freeRow.innerHTML =
+      '<span class="norma-month">' + m + 'ヶ月目</span>' +
+      '<span class="norma-free-label">ノルマ0冊（保管料免除）</span>';
+    listBEl.appendChild(freeRow);
+  }
+
+  // 6ヶ月目以降の警告
+  var firstNorma = Math.ceil(qty * 0.6);
+  var warnDiv = document.createElement('div');
+  warnDiv.className = 'norma-b-warn';
+  warnDiv.innerHTML =
+    '<span class="norma-b-warn-icon">🚨</span>' +
+    '<span>6ヶ月目から強制的にルートAへ移行！その時点で全く売れていなければ、納品数と同じ<strong>' + qty + '冊</strong>の在庫に対して毎月60%のノルマが発生します。<br>最初のノルマ：<strong>' + firstNorma + '冊</strong></span>';
+  listBEl.appendChild(warnDiv);
 }
 
 ['price', 'qty'].forEach(function(id) {
