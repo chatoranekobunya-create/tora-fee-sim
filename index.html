@@ -249,7 +249,7 @@ letter-spacing: -0.02em;
 .big-num.red    { color: var(–red); }
 .big-num.green  { color: var(–green); }
 .result-unit { font-size: 0.88rem; color: var(–text-sub); }
-.result-note { font-size: 0.7rem; color: #999; margin-top: 0.3rem; }
+.result-note { font-size: 0.7rem; color: #999; margin-top: 0.3rem; white-space: pre-line; line-height: 1.7; }
 
 /* プログレスバー */
 .prog-wrap {
@@ -492,6 +492,69 @@ color: #8b0000;
 font-weight: 700;
 }
 .norma-b-warn-icon { flex-shrink: 0; }
+.norma-b-notice {
+font-size: 0.7rem;
+color: #b05050;
+line-height: 1.6;
+margin-bottom: 0.6rem;
+padding: 0.4rem 0.5rem;
+background: rgba(176, 80, 80, 0.07);
+border-radius: 5px;
+}
+
+/* 返本再計算ボックス */
+.recalc-box {
+background: #f8f8f8;
+border: 1px dashed #ccc;
+border-radius: 8px;
+padding: 0.9rem 1rem;
+margin-top: 0.8rem;
+}
+.recalc-title {
+font-size: 0.72rem;
+font-weight: 800;
+color: #888;
+margin-bottom: 0.65rem;
+letter-spacing: 0.03em;
+}
+.recalc-input-row {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+margin-bottom: 0.6rem;
+flex-wrap: wrap;
+}
+.recalc-label {
+font-size: 0.74rem;
+color: var(–text-sub);
+font-weight: 700;
+white-space: nowrap;
+}
+.recalc-input {
+width: 5.5rem;
+background: #fff;
+border: 1.5px solid #ddd;
+border-radius: 6px;
+padding: 0.4rem 0.55rem;
+font-family: inherit;
+font-size: 0.9rem;
+font-weight: 700;
+color: var(–text);
+-webkit-appearance: none;
+appearance: none;
+transition: border-color 0.2s;
+}
+.recalc-input:focus { outline: none; border-color: var(–orange); }
+.recalc-unit { font-size: 0.74rem; color: #aaa; }
+.recalc-result {
+font-size: 0.76rem;
+color: var(–text-sub);
+line-height: 1.8;
+}
+.recalc-result strong {
+color: var(–red);
+font-size: 0.95rem;
+}
 
 /* フッター */
 footer {
@@ -534,6 +597,14 @@ border-top: 1px solid var(–gray-line);
     <div class="input-wrap">
       <input type="number" id="qty" class="input-field" placeholder="例：100" min="1" inputmode="numeric">
       <span class="input-unit">冊</span>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label class="input-label" for="pages">ページ数（表紙込み）</label>
+    <div class="input-wrap">
+      <input type="number" id="pages" class="input-field" placeholder="例：24" min="1" inputmode="numeric">
+      <span class="input-unit">ページ</span>
     </div>
   </div>
 
@@ -595,6 +666,18 @@ border-top: 1px solid var(–gray-line);
         <span class="result-unit">円</span>
       </div>
       <div class="result-note" id="res-return-detail"></div>
+      <!-- 再計算ボックス -->
+      <div class="recalc-box">
+        <div class="recalc-title">🔄 実際の返本予定数で再計算</div>
+        <div class="recalc-input-row">
+          <span class="recalc-label">引き上げる冊数</span>
+          <input type="number" id="leftover-qty" class="recalc-input" min="0" inputmode="numeric">
+          <span class="recalc-unit">冊</span>
+        </div>
+        <div class="recalc-result">
+          必要な箱数：<strong id="res-recalc-boxes">—</strong> 箱　／　返本手数料：<strong id="res-recalc-fee">—</strong> 円
+        </div>
+      </div>
     </div>
     <div class="result-row">
       <div class="result-label">保管料の「元を取る」ための最低販売数</div>
@@ -671,7 +754,8 @@ var COMMISSION_RATE    = 0.30;  // 委託販売手数料率（30%）
 var FREE_STORAGE_RATE  = 0.60;  // 保管料免除ライン（販売率60%）
 var STORAGE_UNIT_BOOKS = 300;   // 保管料課金単位（冊）
 var STORAGE_UNIT_FEE   = 500;   // 1単位あたりの月額保管料（円）
-var RETURN_BOX_BOOKS   = 100;   // 1箱あたり目安冊数（返本料計算用）
+var RETURN_BOX_PAGES   = 2400;  // 1箱の容量（ページ数換算。公式QA「24P×100冊」基準）
+var RETURN_BOX_MAX     = 120;   // 1箱あたりの最大冊数（重量制限）
 var RETURN_BOX_FEE     = 1500;  // 1箱あたり返本手数料（円）
 // ============================================================
 
@@ -682,9 +766,14 @@ function fmt(n) {
 function calculate() {
   var price = parseFloat(document.getElementById('price').value);
   var qty   = parseInt(document.getElementById('qty').value, 10);
+  var pages = parseInt(document.getElementById('pages').value, 10);
 
   if (!price || !qty || price <= 0 || qty <= 0) {
     alert('本体価格と納品予定数を正しく入力してください。');
+    return;
+  }
+  if (!pages || pages <= 0) {
+    alert('本のページ数を正しく入力してください（返本再計算に使用します）。');
     return;
   }
 
@@ -694,15 +783,21 @@ function calculate() {
   var maxEarn        = qty * earnPerBook;
   var storageUnits   = Math.ceil(qty / STORAGE_UNIT_BOOKS);
   var storageMonthly = storageUnits * STORAGE_UNIT_FEE;
-  var returnBoxes    = Math.ceil(qty / RETURN_BOX_BOOKS);
-  var returnFee      = returnBoxes * RETURN_BOX_FEE;
+
+  // ページ数ベースの返本箱数計算
+  var booksPerBox  = Math.min(Math.floor(RETURN_BOX_PAGES / pages), RETURN_BOX_MAX);
+  var returnBoxes  = Math.ceil(qty / booksPerBox);
+  var returnFee    = returnBoxes * RETURN_BOX_FEE;
 
   document.getElementById('res-must-sell').textContent       = fmt(mustSell);
   document.getElementById('res-must-earn').textContent       = fmt(mustEarn);
   document.getElementById('res-storage-monthly').textContent = fmt(storageMonthly);
   document.getElementById('res-storage-detail').textContent  = '残' + fmt(qty) + '冊 → ' + storageUnits + '単位 × ' + STORAGE_UNIT_FEE.toLocaleString() + '円';
   document.getElementById('res-return-fee').textContent      = fmt(returnFee);
-  document.getElementById('res-return-detail').textContent   = '返本手数料 ' + RETURN_BOX_FEE.toLocaleString() + '円 × 推定' + returnBoxes + '箱分';
+  document.getElementById('res-return-detail').textContent   =
+    'あなたの本（' + pages + 'P）の場合、1箱に約' + booksPerBox + '冊入る計算です（計' + returnBoxes + '箱）\n' +
+    '※とらのあな公式QAの「B5・24Pの本が約100冊入る箱」という基準を元に、1箱の容量を2400ページ分として算出しています。\n' +
+    '※紙の厚さや判型によって変動するため、あくまで目安としてご活用ください。';
 
   // 保管料の元を取るための最低販売数
   var coverBooks  = Math.ceil(storageMonthly / earnPerBook);
@@ -734,6 +829,13 @@ function calculate() {
 
   // ノルマ表を生成
   renderNormaTable(qty);
+
+  // 再計算ボックス初期値セット＆イベント登録
+  var leftoverEl = document.getElementById('leftover-qty');
+  leftoverEl.value = qty;
+  recalcReturnFee();
+  // イベントが未登録の場合のみ登録（重複防止）
+  leftoverEl.oninput = recalcReturnFee;
 
   var results = document.getElementById('results');
   results.style.display = 'block';
@@ -782,10 +884,11 @@ function renderNormaTable(qty) {
   var routeB = document.createElement('div');
   routeB.className = 'norma-route route-b';
 
-  var badgeB = '<span class="norma-route-badge">ルートB</span>';
-  var nameB  = '<div class="norma-route-name">販売協力プラン：5ヶ月間の猶予後にノルマ開始</div>';
-  var listB  = '<div class="norma-list" id="norma-list-b"></div>';
-  routeB.innerHTML = badgeB + nameB + listB;
+  var badgeB  = '<span class="norma-route-badge">ルートB</span>';
+  var nameB   = '<div class="norma-route-name">販売協力プラン：5ヶ月間の猶予後にノルマ開始</div>';
+  var noticeB = '<div class="norma-b-notice">※現在、公式規約において「販売協力」の具体的な内容は明記されていません（詳細は不明です）。</div>';
+  var listB   = '<div class="norma-list" id="norma-list-b"></div>';
+  routeB.innerHTML = badgeB + nameB + noticeB + listB;
   wrap.appendChild(routeB);
 
   var listBEl = document.getElementById('norma-list-b');
@@ -810,7 +913,28 @@ function renderNormaTable(qty) {
   listBEl.appendChild(warnDiv);
 }
 
-['price', 'qty'].forEach(function(id) {
+function recalcReturnFee() {
+  var pages    = parseInt(document.getElementById('pages').value, 10);
+  var leftover = parseInt(document.getElementById('leftover-qty').value, 10);
+  var boxesEl  = document.getElementById('res-recalc-boxes');
+  var feeEl    = document.getElementById('res-recalc-fee');
+
+  if (!pages || pages <= 0 || isNaN(leftover) || leftover <= 0) {
+    boxesEl.textContent = '0';
+    feeEl.textContent   = '0';
+    return;
+  }
+
+  // 1箱に入る冊数（2400ページ基準、上限120冊）
+  var booksPerBox = Math.min(Math.floor(2400 / pages), 120);
+  var boxes       = Math.ceil(leftover / booksPerBox);
+  var fee         = boxes * RETURN_BOX_FEE;
+
+  boxesEl.textContent = boxes.toLocaleString('ja-JP');
+  feeEl.textContent   = fee.toLocaleString('ja-JP');
+}
+
+['price', 'qty', 'pages'].forEach(function(id) {
   document.getElementById(id).addEventListener('keydown', function(e) {
     if (e.key === 'Enter') calculate();
   });
