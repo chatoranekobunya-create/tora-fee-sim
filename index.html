@@ -973,14 +973,21 @@ function calculate() {
     coverNoteEl.textContent = '※月にこれだけ売れれば、利益（' + coverEarn + '円）でその月の保管料をカバーできます（赤字回避）';
     coverNoteEl.style.color = '#999';
   }
-  var pageUrl   = location.href.split('?')[0];
-  var shareText = 'とらのあな新制度シミュレーターで計算しました！私の納品予定だと【' + fmt(mustSell) + '冊】売れないと保管料が発生します😇 #同人作家さんと繋がりたい';
-  document.getElementById('share-btn').href = 'https://x.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(pageUrl);
-
   // 2: 3社比較シミュレーション生成
   var expectedRate = parseInt(document.getElementById('expected-rate').value, 10) || 20;
   document.getElementById('norma-card-title') && (document.getElementById('norma-card-title').textContent = '');
-  renderComparison(qty, expectedRate);
+  var bestResult = renderComparison(qty, expectedRate);
+
+  // シェアテキストを動的生成
+  var simMonths  = parseInt(document.getElementById('sim-months').value, 10) || 12;
+  var shareText  =
+    '私の本（' + pages + 'P）を' + simMonths + 'ヶ月委託した結果…\n' +
+    '最も合っていそうなのは【' + bestResult.name + '】でした📦\n\n' +
+    'とら・フロマ・BOOTHの「保管料＆収支」比較シミュレーター📊\n' +
+    '新刊の委託先決めに！\n' +
+    '#同人委託シミュレーター\n' +
+    'https://tora-fee-sim.vercel.app';
+  document.getElementById('share-btn').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
 
   // 再計算ボックス初期値セット＆イベント登録
   var leftoverEl = document.getElementById('leftover-qty');
@@ -1048,6 +1055,8 @@ function renderComparison(qty, rate) {
     }
   ];
 
+  var bestResult = { name: '', profit: -Infinity };
+
   companies.forEach(function(co) {
     var card = document.createElement('div');
     card.className = 'comp-card ' + co.key;
@@ -1091,6 +1100,12 @@ function renderComparison(qty, rate) {
 
     var feeValClass   = totalFee === 0 ? 'zero' : '';
     var takeHome      = Math.floor(totalRevenue - totalFee);
+
+    // 最高手取りを追跡
+    if (takeHome > bestResult.profit) {
+      bestResult = { name: co.badge, profit: takeHome };
+    }
+
     var summaryBlock  =
       '<div class="comp-summary">' +
         '<div class="comp-summary-row">' +
@@ -1109,6 +1124,8 @@ function renderComparison(qty, rate) {
       '<div class="comp-note">' + co.note + '</div>';
     wrap.appendChild(card);
   });
+
+  return bestResult;
 }
 
 function recalcReturnFee() {
