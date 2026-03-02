@@ -628,11 +628,6 @@ letter-spacing: -0.02em;
 .comp-total-num.high { color: #c0392b; }
 .comp-total-unit { font-size: 0.8rem; color: var(–text-sub); }
 
-.comp-list {
-display: flex;
-flex-direction: column;
-gap: 0.3rem;
-}
 .comp-row {
 display: flex;
 align-items: flex-start;
@@ -659,6 +654,52 @@ color: #888;
 margin-top: 0.55rem;
 line-height: 1.6;
 }
+
+.comp-list {
+max-height: 350px;
+overflow-y: auto;
+display: flex;
+flex-direction: column;
+gap: 0.3rem;
+margin-bottom: 0.75rem;
+}
+.comp-milestone {
+font-size: 0.72rem;
+font-weight: 900;
+color: #1a7a45;
+background: rgba(39,174,96,0.13);
+border-radius: 5px;
+padding: 0.3rem 0.55rem;
+margin: 0.15rem 0;
+}
+.comp-summary {
+border-top: 1.5px solid rgba(0,0,0,0.08);
+padding-top: 0.75rem;
+margin-top: 0.2rem;
+display: flex;
+flex-direction: column;
+gap: 0.4rem;
+}
+.comp-summary-row {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+font-size: 0.76rem;
+}
+.comp-summary-label { color: var(–text-sub); font-weight: 700; }
+.comp-summary-val   { font-weight: 900; font-size: 0.9rem; color: var(–red); }
+.comp-summary-val.zero { color: #27ae60; }
+.comp-takehome {
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+background: #1A2744;
+border-radius: 7px;
+padding: 0.6rem 0.8rem;
+margin-top: 0.2rem;
+}
+.comp-takehome-label { font-size: 0.72rem; color: rgba(255,255,255,0.7); font-weight: 700; }
+.comp-takehome-val   { font-size: 1.3rem; font-weight: 900; color: #fff; letter-spacing: -0.02em; }
 
 /* フッター */
 footer {
@@ -717,6 +758,18 @@ border-top: 1px solid var(–gray-line);
     <div class="input-wrap">
       <input type="number" id="expected-rate" class="input-field" placeholder="例：20" min="1" max="100" value="20" inputmode="numeric">
       <span class="input-unit">%</span>
+    </div>
+  </div>
+
+  <div class="input-group">
+    <label class="input-label" for="sim-months">シミュレーション期間</label>
+    <div class="input-wrap">
+      <select id="sim-months" class="input-field" style="color:#222;">
+        <option value="6">6ヶ月</option>
+        <option value="12" selected>12ヶ月</option>
+        <option value="24">24ヶ月</option>
+        <option value="36">36ヶ月</option>
+      </select>
     </div>
   </div>
 
@@ -959,44 +1012,54 @@ function calculate() {
 }
 
 function renderComparison(qty, rate) {
+  var simMonths = parseInt(document.getElementById('sim-months').value, 10) || 12;
+  var price     = parseFloat(document.getElementById('price').value) || 0;
+  var pages     = parseInt(document.getElementById('pages').value, 10) || 24;
+
+  // フロマージュ 1スペース収納数（ページ数で判定）
+  var frmCapacity = pages <= 36 ? 300 : pages <= 100 ? 200 : pages <= 200 ? 150 : 100;
+
   var wrap = document.getElementById('comp-section');
   wrap.innerHTML = '';
 
   // イントロ
   var intro = document.createElement('div');
   intro.className = 'comp-intro';
-  intro.innerHTML = '納品数 <strong>' + qty + '冊</strong>、毎月 <strong>' + rate + '%</strong> ずつ売れた場合の6ヶ月間の保管料合計を3社で比較します。';
+  intro.innerHTML = '納品数 <strong>' + qty + '冊</strong>、毎月 <strong>' + rate + '%</strong> ずつ売れた場合の <strong>' + simMonths + 'ヶ月間</strong> の推移を3社で比較します。<br>フロマージュ: 1スペース <strong>' + frmCapacity + '冊</strong>（' + pages + 'Pの場合）';
   wrap.appendChild(intro);
 
-  // 各社の定義
+  // 各社定義
   var companies = [
     {
-      key: 'tora',
-      badge: 'とらのあな',
-      name: 'とらのあな（2026年新制度）',
-      calc: function(stock, sold) {
+      key: 'tora', badge: 'とらのあな', name: 'とらのあな（2026年新制度）',
+      note: '※ノルマ（月初在庫の60%）未達の月に保管料発生。13ヶ月目以降は保管料単価が上がります。',
+      calcMonth: function(stock, sold, month) {
         var norma = Math.ceil(stock * 0.6);
-        var fee = sold < norma ? Math.ceil(stock / 300) * 500 : 0;
-        return fee;
-      },
-      note: '※ノルマ（月初在庫の60%）未達の月に保管料が発生します。'
+        if (sold >= norma) return { fee: 0, revenue: sold * price * 0.7 };
+        var unitFee = month <= 12 ? 500 : 800;
+        var fee = Math.ceil(stock / 300) * unitFee;
+        return { fee: fee, revenue: sold * price * 0.7 };
+      }
     },
     {
-      key: 'frm',
-      badge: 'フロマージュ',
-      name: 'フロマージュ（メロンブックス）',
-      calc: function(stock, sold) { return 0; },
-      note: '※月額保管料は無料ですが、返本時に1箱550円（目安）の送料がかかります。'
+      key: 'frm', badge: 'フロマージュ', name: 'フロマージュ（メロンブックス）',
+      note: '※1〜6ヶ月目は保管料無料。7ヶ月目以降は掛率80%にUPしますが、' + frmCapacity + '冊ごとに月297円の保管料が発生します。',
+      calcMonth: function(stock, sold, month) {
+        var rate70 = sold * price * 0.7;
+        var rate80 = sold * price * 0.8;
+        if (month <= 6) return { fee: 0, revenue: rate70, milestone: false };
+        var fee = Math.ceil(stock / frmCapacity) * 297;
+        return { fee: fee, revenue: rate80, milestone: month === 7 };
+      }
     },
     {
-      key: 'booth',
-      badge: 'BOOTH倉庫',
-      name: 'BOOTH（倉庫サービス）',
-      calc: function(stock, sold) {
+      key: 'booth', badge: 'BOOTH倉庫', name: 'BOOTH（倉庫サービス）',
+      note: '※販売数が月初在庫の20%未満の月は一律1,100円の保管料が発生します。手取り率は100%（委託手数料なし）。',
+      calcMonth: function(stock, sold, month) {
         var norma = Math.ceil(stock * 0.2);
-        return sold < norma ? 1100 : 0;
-      },
-      note: '※月の販売数が月初在庫の20%未満の場合、月額1,100円の保管料が発生します。'
+        var fee = sold < norma ? 1100 : 0;
+        return { fee: fee, revenue: sold * price };
+      }
     }
   ];
 
@@ -1004,45 +1067,60 @@ function renderComparison(qty, rate) {
     var card = document.createElement('div');
     card.className = 'comp-card ' + co.key;
 
-    // ヘッダー
     var header = '<div class="comp-header">' +
       '<span class="comp-badge">' + co.badge + '</span>' +
       '<span class="comp-name">' + co.name + '</span>' +
       '</div>';
 
-    // 6ヶ月ループ計算
     var stock = qty;
     var totalFee = 0;
+    var totalRevenue = 0;
     var rows = '';
 
-    for (var m = 1; m <= 6; m++) {
+    for (var m = 1; m <= simMonths; m++) {
       var sold = Math.min(Math.floor(stock * (rate / 100)), stock);
-      var fee  = co.calc(stock, sold);
-      totalFee += fee;
+      var result = co.calcMonth(stock, sold, m);
+      totalFee     += result.fee;
+      totalRevenue += result.revenue;
       var rest = stock - sold;
-      var feeClass  = fee > 0 ? 'comp-fee-bad' : 'comp-fee-ok';
-      var rowClass   = fee > 0 ? 'fee-bad' : 'fee-ok';
-      var feeText    = fee > 0 ? '保管料: ' + fee.toLocaleString('ja-JP') + '円 ⚠️' : '保管料: 無料 ✅';
+
+      // 7ヶ月目マイルストーン（フロマージュ）
+      if (result.milestone) {
+        rows += '<div class="comp-milestone">✨ 7ヶ月目以降：掛率80%にUP！ / 保管料: ' + frmCapacity + '冊毎に297円</div>';
+      }
+
+      var feeClass = result.fee > 0 ? 'comp-fee-bad' : 'comp-fee-ok';
+      var rowClass  = result.fee > 0 ? 'fee-bad' : 'fee-ok';
+      var feeText   = result.fee > 0
+        ? '保管料: ' + result.fee.toLocaleString('ja-JP') + '円 ⚠️'
+        : '保管料: 無料 ✅';
       rows += '<div class="comp-row ' + rowClass + '">' +
         '<span class="comp-month">' + m + 'ヶ月目</span>' +
         '<span class="comp-sell">' + sold + '冊販売（残' + rest + '冊）　</span>' +
         '<span class="' + feeClass + '">' + feeText + '</span>' +
         '</div>';
+
       stock = rest;
       if (stock <= 0) break;
     }
 
-    // 合計表示の色分け
-    var totalClass = totalFee === 0 ? 'zero' : totalFee <= 2000 ? 'low' : 'high';
-
-    var totalBlock = '<div class="comp-total-wrap">' +
-      '<span class="comp-total-label">6ヶ月間の合計保管料</span>' +
-      '<span class="comp-total-num ' + totalClass + '">' + totalFee.toLocaleString('ja-JP') + '</span>' +
-      '<span class="comp-total-unit">円</span>' +
+    var feeValClass   = totalFee === 0 ? 'zero' : '';
+    var takeHome      = Math.floor(totalRevenue - totalFee);
+    var summaryBlock  =
+      '<div class="comp-summary">' +
+        '<div class="comp-summary-row">' +
+          '<span class="comp-summary-label">累計保管料</span>' +
+          '<span class="comp-summary-val ' + feeValClass + '">' + totalFee.toLocaleString('ja-JP') + ' 円</span>' +
+        '</div>' +
+        '<div class="comp-takehome">' +
+          '<span class="comp-takehome-label">最終的な予想手取り額</span>' +
+          '<span class="comp-takehome-val">' + takeHome.toLocaleString('ja-JP') + ' 円</span>' +
+        '</div>' +
       '</div>';
 
-    card.innerHTML = header + totalBlock +
+    card.innerHTML = header +
       '<div class="comp-list">' + rows + '</div>' +
+      summaryBlock +
       '<div class="comp-note">' + co.note + '</div>';
     wrap.appendChild(card);
   });
