@@ -783,7 +783,7 @@ border-top: 1px solid var(–gray-line);
   <div class="deadline-card">
     <div class="deadline-badge">🚨 MUST SELL — 保管料無料にするための最低販売数</div>
     <div class="result-row">
-      <div class="result-label" id="res-must-label">最低限売らなければいけない冊数（納品数の60%）</div>
+      <div class="result-label" id="res-must-label">とらのあなで保管料がかからないように最低限売らなければいけない冊数（納品数の60%）</div>
       <div class="result-val-wrap">
         <span class="big-num gold" id="res-must-sell">0</span>
         <span class="result-unit">冊</span>
@@ -848,19 +848,6 @@ border-top: 1px solid var(–gray-line);
         <span class="result-unit" id="res-cover-unit">冊 / 月</span>
       </div>
       <div class="result-note" id="res-cover-note"></div>
-    </div>
-  </div>
-
-  <div class="sec-label">④ 完売した場合の受取額</div>
-  <div class="hope-card">
-    <div class="hope-badge">✨ BEST CASE — 全冊完売できたら</div>
-    <div class="result-row">
-      <div class="result-label">100%完売した場合の最大サークル受取金額</div>
-      <div class="result-val-wrap">
-        <span class="big-num green" id="res-max-earn">0</span>
-        <span class="result-unit">円</span>
-      </div>
-      <div class="result-note">委託手数料30%差し引き後の受取ベース（税抜計算）</div>
     </div>
   </div>
 
@@ -954,7 +941,7 @@ function calculate() {
   document.getElementById('res-must-sell').textContent       = fmt(mustSell);
   document.getElementById('res-must-earn').textContent       = fmt(mustEarn);
   // 1: ラベルに納品数を反映
-  document.getElementById('res-must-label').textContent      = '最低限売らなければいけない冊数（納品数' + qty + '冊の60%）';
+  document.getElementById('res-must-label').textContent = 'とらのあなで保管料がかからないように最低限売らなければいけない冊数（納品数' + qty + '冊の60%）';
   // 4: 免除ライン復活
   document.getElementById('prog-total').textContent          = qty + '冊';
   document.getElementById('prog-mid').textContent            = '免除ライン ' + fmt(mustSell) + '冊 (60%)';
@@ -986,8 +973,6 @@ function calculate() {
     coverNoteEl.textContent = '※月にこれだけ売れれば、利益（' + coverEarn + '円）でその月の保管料をカバーできます（赤字回避）';
     coverNoteEl.style.color = '#999';
   }
-  document.getElementById('res-max-earn').textContent = fmt(maxEarn);
-
   var pageUrl   = location.href.split('?')[0];
   var shareText = 'とらのあな新制度シミュレーターで計算しました！私の納品予定だと【' + fmt(mustSell) + '冊】売れないと保管料が発生します😇 #同人作家さんと繋がりたい';
   document.getElementById('share-btn').href = 'https://x.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(pageUrl);
@@ -1078,7 +1063,7 @@ function renderComparison(qty, rate) {
     var rows = '';
 
     for (var m = 1; m <= simMonths; m++) {
-      var sold = Math.min(Math.floor(stock * (rate / 100)), stock);
+      var sold = Math.min(Math.max(Math.floor(stock * (rate / 100)), 1), stock);
       var result = co.calcMonth(stock, sold, m);
       totalFee     += result.fee;
       totalRevenue += result.revenue;
