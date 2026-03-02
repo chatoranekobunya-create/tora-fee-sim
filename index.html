@@ -1026,7 +1026,7 @@ function renderComparison(qty, rate) {
       key: 'tora', badge: 'とらのあな', name: 'とらのあな（2026年新制度）',
       note: '※ノルマ（月初在庫の60%）未達の月に保管料発生。13ヶ月目以降は保管料単価が上がります。',
       calcMonth: function(stock, sold, month) {
-        var norma = Math.ceil(stock * 0.6);
+        var norma = Math.floor(stock * 0.6);  // 販売数の切り捨てと統一
         if (sold >= norma) return { fee: 0, revenue: sold * price * 0.7 };
         var unitFee = month <= 12 ? 500 : 800;
         var fee = Math.ceil(stock / 300) * unitFee;
@@ -1048,7 +1048,7 @@ function renderComparison(qty, rate) {
       key: 'booth', badge: 'BOOTH倉庫', name: 'BOOTH（倉庫サービス）',
       note: '※販売数が月初在庫の20%未満の月は一律1,100円の保管料が発生します。手取り率は100%（委託手数料なし）。',
       calcMonth: function(stock, sold, month) {
-        var norma = Math.ceil(stock * 0.2);
+        var norma = Math.floor(stock * 0.2);  // 販売数の切り捨てと統一
         var fee = sold < norma ? 1100 : 0;
         return { fee: fee, revenue: sold * price };
       }
