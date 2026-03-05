@@ -701,6 +701,77 @@ margin-top: 0.2rem;
 .comp-takehome-label { font-size: 0.72rem; color: rgba(255,255,255,0.7); font-weight: 700; }
 .comp-takehome-val   { font-size: 1.3rem; font-weight: 900; color: #fff; letter-spacing: -0.02em; }
 
+/* 予測注記バナー */
+.prediction-notice {
+background: #fff8e1;
+border-left: 4px solid #f0c940;
+border-radius: 0 6px 6px 0;
+padding: 0.7rem 1rem;
+margin: 0 0 0.5rem;
+font-size: 0.73rem;
+color: #5a4200;
+line-height: 1.65;
+}
+
+/* とらのあな専用オプション枠 */
+.tora-option-group {
+border: 2px solid #e6c940;
+border-radius: 10px;
+padding: 0.9rem 1rem;
+margin: 0.5rem 0 0;
+background: #fffdf0;
+}
+.tora-option-title {
+font-size: 0.76rem;
+font-weight: 900;
+color: #8a6500;
+margin-bottom: 0.7rem;
+letter-spacing: 0.02em;
+}
+.tora-option-item {
+display: flex;
+align-items: flex-start;
+gap: 0.6rem;
+margin-bottom: 0.55rem;
+font-size: 0.78rem;
+color: var(–text);
+line-height: 1.5;
+cursor: pointer;
+}
+.tora-option-item:last-child { margin-bottom: 0; }
+.tora-option-item input[type=“checkbox”] {
+flex-shrink: 0;
+width: 1.1rem;
+height: 1.1rem;
+margin-top: 0.1rem;
+accent-color: #C49000;
+cursor: pointer;
+}
+.tora-option-sub {
+font-size: 0.68rem;
+color: #999;
+display: block;
+margin-top: 0.1rem;
+}
+
+/* とらのあな月別タグ */
+.comp-row-free-unconditional {
+background: rgba(196,144,0,0.10) !important;
+}
+.comp-tag {
+display: inline-block;
+font-size: 0.6rem;
+font-weight: 900;
+padding: 0.08rem 0.45rem;
+border-radius: 3px;
+margin-left: 0.3rem;
+vertical-align: middle;
+white-space: nowrap;
+}
+.comp-tag-free { background: #C49000; color: #fff; }
+.comp-tag-rate { background: #27ae60; color: #fff; }
+.comp-tag-paid { background: #c0392b; color: #fff; }
+
 /* フッター */
 footer {
 text-align: center;
@@ -723,7 +794,11 @@ border-top: 1px solid var(–gray-line);
 
 <div class="disclaimer">
   <span class="disclaimer-title">⚠️【免責事項】</span>
-  本ツールは2026年2月時点の公式規約に基づく「目安」のシミュレーションです。税金の端数処理や13ヶ月目以降の保管料変動などには完全対応していません。計算結果が異なっていた場合でも一切の責任を負いかねますので、必ず公式の最新規約をご自身でご確認ください。
+  本ツールは各社公式規約に基づく「目安」のシミュレーションです。計算結果が異なっていた場合でも一切の責任を負いかねますので、必ず公式の最新規約をご自身でご確認ください。
+</div>
+
+<div class="prediction-notice">
+  🔮 <strong>※一部の無料条件の詳細は後日発表予定のため、本ツールは公式発表の例に基づいた現時点での【予測シミュレーション】です。</strong>とらのあな新制度（2026年4月〜）の計算は今後変更される可能性があります。
 </div>
 
 <div class="card">
@@ -771,6 +846,18 @@ border-top: 1px solid var(–gray-line);
         <option value="36">36ヶ月</option>
       </select>
     </div>
+  </div>
+
+  <div class="tora-option-group">
+    <div class="tora-option-title">🐯 とらのあな専用 保管料免除オプション</div>
+    <label class="tora-option-item">
+      <input type="checkbox" id="opt-senbaai">
+      <span>専売登録をする（無料期間＋2ヶ月）<span class="tora-option-sub">専売登録により、初月に加えてさらに2ヶ月間無条件無料になります</span></span>
+    </label>
+    <label class="tora-option-item">
+      <input type="checkbox" id="opt-pre-delivery">
+      <span>発行日前納品をする（無料期間＋1ヶ月）<span class="tora-option-sub">発行日前に納品することで、さらに1ヶ月間無条件無料になります</span></span>
+    </label>
   </div>
 
 <button class="calc-btn" onclick="calculate()">シミュレーションする</button>
@@ -964,13 +1051,13 @@ function calculate() {
     coverNumEl.textContent  = '不可';
     coverNumEl.className    = 'big-num red';
     coverUnitEl.textContent = '';
-    coverNoteEl.textContent = '※単価に対して保管料が高いため、免除ライン（' + fmt(mustSell) + '冊）に到達して保管料を無料にしない限り赤字になります。';
+    coverNoteEl.textContent = '※単価に対して保管料が高いため、免除ライン（' + fmt(mustSell) + '冊）に到達して保管料を無料にしない限り収支がマイナスになります。';
     coverNoteEl.style.color = '#b00000';
   } else {
     coverNumEl.textContent  = fmt(coverBooks);
     coverNumEl.className    = 'big-num orange';
     coverUnitEl.textContent = '冊 / 月';
-    coverNoteEl.textContent = '※月にこれだけ売れれば、利益（' + coverEarn + '円）でその月の保管料をカバーできます（赤字回避）';
+    coverNoteEl.textContent = '※月にこれだけ売れれば、受取額（' + coverEarn + '円）でその月の保管料をカバーできます';
     coverNoteEl.style.color = '#999';
   }
   // 2: 3社比較シミュレーション生成
@@ -1023,14 +1110,22 @@ function renderComparison(qty, rate) {
   // 各社定義
   var companies = [
     {
-      key: 'tora', badge: 'とらのあな', name: 'とらのあな（2026年新制度）',
-      note: '※ノルマ（月初在庫の60%）未達の月に保管料発生。13ヶ月目以降は保管料単価が上がります。',
-      calcMonth: function(stock, sold, month) {
-        var norma = Math.floor(stock * 0.6);  // 販売数の切り捨てと統一
-        if (sold >= norma) return { fee: 0, revenue: sold * price * 0.7 };
+      key: 'tora', badge: 'とらのあな', name: 'とらのあな（新制度 2026年4月〜）',
+      note: '※新制度（2026年4月〜）の予測シミュレーションです。委託初月は無条件無料。専売・発行日前納品オプションで無料期間が延長されます。無条件無料期間終了後は月初在庫の60%販売で保管料無料。',
+      calcMonth: function(stock, sold, month, freePeriod) {
+        // 無条件無料期間内
+        if (month <= freePeriod) {
+          return { fee: 0, revenue: sold * price * 0.7, rowType: 'unconditional' };
+        }
+        // 販売率60%達成で無料
+        var norma = Math.floor(stock * 0.6);
+        if (sold >= norma) {
+          return { fee: 0, revenue: sold * price * 0.7, rowType: 'rate-free' };
+        }
+        // 保管料発生（13ヶ月目以降は単価UP）
         var unitFee = month <= 12 ? 500 : 800;
         var fee = Math.ceil(stock / 300) * unitFee;
-        return { fee: fee, revenue: sold * price * 0.7 };
+        return { fee: fee, revenue: sold * price * 0.7, rowType: 'paid' };
       }
     },
     {
@@ -1055,6 +1150,11 @@ function renderComparison(qty, rate) {
     }
   ];
 
+  // とらのあな 無条件無料期間を計算
+  var freePeriod = 1; // 基本：委託初月
+  if (document.getElementById('opt-senbaai').checked)      freePeriod += 2;
+  if (document.getElementById('opt-pre-delivery').checked) freePeriod += 1;
+
   var bestResult = { name: '', profit: -Infinity };
 
   companies.forEach(function(co) {
@@ -1073,25 +1173,45 @@ function renderComparison(qty, rate) {
 
     for (var m = 1; m <= simMonths; m++) {
       var sold = Math.min(Math.max(Math.floor(stock * (rate / 100)), 1), stock);
-      var result = co.calcMonth(stock, sold, m);
+      var result = co.key === 'tora'
+        ? co.calcMonth(stock, sold, m, freePeriod)
+        : co.calcMonth(stock, sold, m);
       totalFee     += result.fee;
       totalRevenue += result.revenue;
       var rest = stock - sold;
 
-      // 7ヶ月目マイルストーン（フロマージュ）
+      // フロマージュ 7ヶ月目マイルストーン
       if (result.milestone) {
         rows += '<div class="comp-milestone">✨ 7ヶ月目以降：掛率80%にUP！ / 保管料: ' + frmCapacity + '冊毎に297円</div>';
       }
 
-      var feeClass = result.fee > 0 ? 'comp-fee-bad' : 'comp-fee-ok';
-      var rowClass  = result.fee > 0 ? 'fee-bad' : 'fee-ok';
-      var feeText   = result.fee > 0
-        ? '保管料: ' + result.fee.toLocaleString('ja-JP') + '円 ⚠️'
-        : '保管料: 無料 ✅';
+      // 行スタイルとタグ（とらのあな専用タイプ分け）
+      var rowClass = result.fee > 0 ? 'fee-bad' : 'fee-ok';
+      var feeText, tagHtml = '';
+
+      if (co.key === 'tora') {
+        if (result.rowType === 'unconditional') {
+          rowClass = 'fee-ok comp-row-free-unconditional';
+          tagHtml  = '<span class="comp-tag comp-tag-free">無条件無料</span>';
+          feeText  = '<span class="comp-fee-ok">保管料: 無料 🎁</span>';
+        } else if (result.rowType === 'rate-free') {
+          tagHtml = '<span class="comp-tag comp-tag-rate">60%達成✅</span>';
+          feeText = '<span class="comp-fee-ok">保管料: 無料 ✅</span>';
+        } else {
+          tagHtml = '<span class="comp-tag comp-tag-paid">保管料発生⚠️</span>';
+          feeText = '<span class="comp-fee-bad">保管料: ' + result.fee.toLocaleString('ja-JP') + '円 ⚠️</span>';
+        }
+      } else {
+        var feeClass = result.fee > 0 ? 'comp-fee-bad' : 'comp-fee-ok';
+        feeText = result.fee > 0
+          ? '<span class="' + feeClass + '">保管料: ' + result.fee.toLocaleString('ja-JP') + '円 ⚠️</span>'
+          : '<span class="' + feeClass + '">保管料: 無料 ✅</span>';
+      }
+
       rows += '<div class="comp-row ' + rowClass + '">' +
-        '<span class="comp-month">' + m + 'ヶ月目</span>' +
+        '<span class="comp-month">' + m + 'ヶ月目' + tagHtml + '</span>' +
         '<span class="comp-sell">' + sold + '冊販売（残' + rest + '冊）　</span>' +
-        '<span class="' + feeClass + '">' + feeText + '</span>' +
+        feeText +
         '</div>';
 
       stock = rest;
