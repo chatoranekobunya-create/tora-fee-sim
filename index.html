@@ -785,6 +785,95 @@ white-space: nowrap;
 .comp-tag-rate { background: #27ae60; color: #fff; }
 .comp-tag-paid { background: #c0392b; color: #fff; }
 
+/* 頒布ペースタブ */
+.pace-tabs {
+display: flex;
+gap: 0.4rem;
+margin-top: 0.3rem;
+flex-wrap: wrap;
+}
+.pace-tab {
+flex: 1;
+min-width: 5rem;
+padding: 0.5rem 0.4rem;
+border: 2px solid #ddd;
+border-radius: 8px;
+background: #f8f8f8;
+font-size: 0.7rem;
+font-weight: 800;
+color: #666;
+cursor: pointer;
+text-align: center;
+line-height: 1.3;
+transition: all 0.15s;
+}
+.pace-tab.active {
+border-color: #E8611A;
+background: #fff5ef;
+color: #E8611A;
+}
+.pace-panel {
+background: #fafafa;
+border: 1.5px solid #eee;
+border-radius: 8px;
+padding: 0.8rem;
+margin-top: 0.5rem;
+}
+.pace-panel-note {
+font-size: 0.72rem;
+color: #888;
+line-height: 1.6;
+margin-bottom: 0.5rem;
+}
+.custom-row {
+display: flex;
+align-items: center;
+gap: 0.5rem;
+margin-bottom: 0.4rem;
+}
+.custom-month-label {
+font-size: 0.74rem;
+font-weight: 700;
+color: #555;
+width: 4rem;
+flex-shrink: 0;
+}
+.custom-data-input {
+flex: 1;
+padding: 0.4rem 0.6rem;
+border: 1.5px solid #ddd;
+border-radius: 6px;
+font-size: 0.85rem;
+background: #fff;
+max-width: 6rem;
+}
+.pace-advice {
+margin-top: 0.75rem;
+padding: 0.65rem 0.75rem;
+background: #f0f7ff;
+border-left: 3px solid #5b9bd5;
+border-radius: 0 6px 6px 0;
+font-size: 0.72rem;
+color: #555;
+line-height: 1.65;
+}
+.pace-advice strong {
+color: #2c5f8a;
+font-size: 0.74rem;
+}
+
+.add-row-btn {
+margin-top: 0.4rem;
+padding: 0.35rem 0.9rem;
+border: 1.5px dashed #bbb;
+border-radius: 6px;
+background: #fff;
+font-size: 0.75rem;
+color: #888;
+cursor: pointer;
+width: 100%;
+}
+
 /* フッター */
 footer {
 text-align: center;
@@ -845,12 +934,77 @@ border-top: 1px solid var(–gray-line);
     </div>
   </div>
 
+  <!-- 頒布ペース選択 -->
+
   <div class="input-group">
-    <label class="input-label" for="expected-rate">毎月、残りの在庫の何%くらい売れそうか？（予測）</label>
-    <div class="input-wrap">
-      <input type="number" id="expected-rate" class="input-field" placeholder="例：20" min="1" max="100" value="20" inputmode="numeric">
-      <span class="input-unit">%</span>
+    <label class="input-label">頒布ペースを選んでください</label>
+    <div class="pace-tabs">
+      <button class="pace-tab active" onclick="setPaceMode('even', this)">📊 均等ペース</button>
+      <button class="pace-tab" onclick="setPaceMode('event', this)">🚀 イベント初動型</button>
+      <button class="pace-tab" onclick="setPaceMode('custom', this)">🔬 過去データ予測</button>
     </div>
+  </div>
+
+  <!-- 均等ペース -->
+
+  <div id="pace-panel-even" class="pace-panel">
+    <div class="input-group">
+      <label class="input-label" for="expected-rate">毎月、残りの在庫の何%くらい売れそうか？</label>
+      <div class="input-wrap">
+        <input type="number" id="expected-rate" class="input-field" placeholder="例：20" min="1" max="100" value="20" inputmode="numeric">
+        <span class="input-unit">%</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- イベント初動型 -->
+
+  <div id="pace-panel-event" class="pace-panel" style="display:none;">
+    <div class="pace-panel-note">初月にドカッと売れて、その後はゆっくり減っていくパターン。</div>
+    <div class="input-group">
+      <label class="input-label" for="event-m1-rate">初月に売れる割合</label>
+      <div style="position:relative;padding-right:3.5rem;margin-top:0.3rem;">
+        <input type="range" id="event-m1-rate" min="30" max="99" value="70" oninput="document.getElementById('event-m1-val').textContent=this.value" style="width:100%;accent-color:#E8611A;display:block;">
+        <span style="position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:0.9rem;font-weight:700;color:#444;white-space:nowrap;"><span id="event-m1-val">70</span>%</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <label class="input-label" for="event-m2-rate">2ヶ月目に売れる割合（初月の残りから）</label>
+      <div class="input-wrap">
+        <input type="number" id="event-m2-rate" class="input-field" value="20" min="1" max="99" inputmode="numeric">
+        <span class="input-unit">%</span>
+      </div>
+    </div>
+    <div class="pace-panel-note" style="margin-top:0.3rem;">3ヶ月目以降は残りの在庫を均等に消化します（残りの10%相当を毎月）。</div>
+    <div class="pace-advice">
+      💡 <strong>おすすめの王道設定：初月70% / 2ヶ月目20%</strong><br>
+      同人誌の売上は、初動で一気に動いて後はなだらかに続く「L字カーブ（ロングテール）」が一般的！迷ったらこの比率が一番リアルでおすすめ！
+    </div>
+  </div>
+
+  <!-- 過去データ予測 -->
+
+  <div id="pace-panel-custom" class="pace-panel" style="display:none;">
+    <div class="pace-panel-note">過去の頒布実績を入力すると、売上減衰率を自動計算してシミュレーションします。</div>
+    <div id="custom-data-rows">
+      <div class="custom-row">
+        <span class="custom-month-label">1ヶ月目</span>
+        <input type="number" class="custom-data-input" placeholder="冊数" min="0" inputmode="numeric">
+        <span class="input-unit">冊</span>
+      </div>
+      <div class="custom-row">
+        <span class="custom-month-label">2ヶ月目</span>
+        <input type="number" class="custom-data-input" placeholder="冊数" min="0" inputmode="numeric">
+        <span class="input-unit">冊</span>
+      </div>
+      <div class="custom-row">
+        <span class="custom-month-label">3ヶ月目</span>
+        <input type="number" class="custom-data-input" placeholder="冊数" min="0" inputmode="numeric">
+        <span class="input-unit">冊</span>
+      </div>
+    </div>
+    <button class="add-row-btn" onclick="addCustomRow()">＋ 月を追加</button>
+    <div class="pace-panel-note" style="margin-top:0.5rem;">※入力値から月ごとの減衰率を算出し、その後の月に適用します。</div>
   </div>
 
   <div class="input-group">
@@ -883,33 +1037,7 @@ border-top: 1px solid var(–gray-line);
 
 <div id="results">
 
-  <div class="sec-label">① 保管料免除ライン</div>
-  <div class="deadline-card">
-    <div class="deadline-badge">🚨 MUST SELL — 保管料無料にするための最低販売数</div>
-    <div class="result-row">
-      <div class="result-label" id="res-must-label">とらのあなで保管料がかからないように最低限売らなければいけない冊数（納品数の60%）</div>
-      <div class="result-val-wrap">
-        <span class="big-num gold" id="res-must-sell">0</span>
-        <span class="result-unit">冊</span>
-      </div>
-      <div class="prog-wrap"><div class="prog-fill"></div></div>
-      <div class="prog-labels">
-        <span>0冊</span>
-        <span id="prog-mid">免除ライン (60%)</span>
-        <span id="prog-total">0冊</span>
-      </div>
-    </div>
-    <div class="result-row">
-      <div class="result-label">上記を売り切った場合のサークル受取額</div>
-      <div class="result-val-wrap">
-        <span class="big-num orange" id="res-must-earn">0</span>
-        <span class="result-unit">円</span>
-      </div>
-      <div class="result-note">※ここから印刷代・交通費等の経費が引かれます</div>
-    </div>
-  </div>
-
-  <div class="sec-label">② 委託先3社の6ヶ月比較シミュレーション</div>
+  <div class="sec-label">② 委託先3社の比較シミュレーション</div>
   <div class="comp-section" id="comp-section">
     <!-- JSで動的生成 -->
   </div>
@@ -1003,17 +1131,110 @@ border-top: 1px solid var(–gray-line);
 // ============================================================
 // 計算定数 — ここを変更すれば計算に自動反映されます
 // ============================================================
-var COMMISSION_RATE    = 0.30;  // 委託販売手数料率（30%）
-var FREE_STORAGE_RATE  = 0.60;  // 保管料免除ライン（販売率60%）
-var STORAGE_UNIT_BOOKS = 300;   // 保管料課金単位（冊）
-var STORAGE_UNIT_FEE   = 500;   // 1単位あたりの月額保管料（円）
-var RETURN_BOX_PAGES   = 2400;  // 1箱の容量（ページ数換算。公式QA「24P×100冊」基準）
-var RETURN_BOX_MAX     = 120;   // 1箱あたりの最大冊数（重量制限）
-var RETURN_BOX_FEE     = 1500;  // 1箱あたり返本手数料（円）
-// ============================================================
+var COMMISSION_RATE    = 0.30;
+var FREE_STORAGE_RATE  = 0.60;
+var STORAGE_UNIT_BOOKS = 300;
+var STORAGE_UNIT_FEE   = 500;
+var RETURN_BOX_PAGES   = 2400;
+var RETURN_BOX_MAX     = 120;
+var RETURN_BOX_FEE     = 1500;
 
-function fmt(n) {
-  return Math.floor(n).toLocaleString('ja-JP');
+function fmt(n) { return Math.floor(n).toLocaleString('ja-JP'); }
+
+var currentPaceMode = 'even';
+
+function setPaceMode(mode, btn) {
+  currentPaceMode = mode;
+  document.querySelectorAll('.pace-tab').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('pace-panel-even').style.display   = mode === 'even'   ? '' : 'none';
+  document.getElementById('pace-panel-event').style.display  = mode === 'event'  ? '' : 'none';
+  document.getElementById('pace-panel-custom').style.display = mode === 'custom' ? '' : 'none';
+}
+
+function addCustomRow() {
+  var rows = document.getElementById('custom-data-rows');
+  var count = rows.querySelectorAll('.custom-row').length + 1;
+  var div = document.createElement('div');
+  div.className = 'custom-row';
+  div.innerHTML = '<span class="custom-month-label">' + count + 'ヶ月目</span>' +
+    '<input type="number" class="custom-data-input" placeholder="冊数" min="0" inputmode="numeric">' +
+    '<span class="input-unit">冊</span>';
+  rows.appendChild(div);
+}
+
+// 月別販売数配列を生成する
+function buildSalesSchedule(qty, simMonths) {
+  var schedule = []; // schedule[i] = i+1ヶ月目の販売数
+
+  if (currentPaceMode === 'even') {
+    var rate = (parseInt(document.getElementById('expected-rate').value, 10) || 20) / 100;
+    var stock = qty;
+    for (var m = 0; m < simMonths; m++) {
+      if (stock <= 0) break;
+      var sold = Math.min(Math.max(Math.floor(stock * rate), 1), stock);
+      schedule.push(sold);
+      stock -= sold;
+    }
+
+  } else if (currentPaceMode === 'event') {
+    var m1pct = parseInt(document.getElementById('event-m1-rate').value, 10) / 100;
+    var m2pct = (parseInt(document.getElementById('event-m2-rate').value, 10) || 20) / 100;
+    var stock = qty;
+    for (var m = 0; m < simMonths; m++) {
+      if (stock <= 0) break;
+      var sold;
+      if (m === 0) {
+        sold = Math.min(Math.floor(qty * m1pct), stock);
+      } else if (m === 1) {
+        sold = Math.min(Math.floor(qty * m2pct), stock);
+      } else {
+        // 3ヶ月目以降：残りの10%相当を均等に（最低1冊）
+        var remaining = qty - Math.floor(qty * m1pct) - Math.floor(qty * m2pct);
+        var monthlyRest = Math.max(Math.floor(remaining / Math.max(simMonths - 2, 1)), 1);
+        sold = Math.min(monthlyRest, stock);
+      }
+      sold = Math.max(sold, 1);
+      schedule.push(sold);
+      stock -= sold;
+    }
+
+  } else { // custom
+    var inputs = document.querySelectorAll('.custom-data-input');
+    var pastData = [];
+    inputs.forEach(function(inp) {
+      var v = parseInt(inp.value, 10);
+      if (!isNaN(v) && v >= 0) pastData.push(v);
+    });
+    if (pastData.length < 2) {
+      alert('過去データ予測モードでは、2ヶ月分以上の実績を入力してください。');
+      return null;
+    }
+    // 月ごとの減衰率を計算（平均）
+    var decayRates = [];
+    for (var i = 1; i < pastData.length; i++) {
+      if (pastData[i - 1] > 0) decayRates.push(pastData[i] / pastData[i - 1]);
+    }
+    var avgDecay = decayRates.reduce(function(a, b) { return a + b; }, 0) / decayRates.length;
+    avgDecay = Math.max(0.01, Math.min(avgDecay, 1.5));
+
+    // 過去データを先にそのまま使い、その後は減衰率を適用
+    var stock = qty;
+    for (var m = 0; m < simMonths; m++) {
+      if (stock <= 0) break;
+      var sold;
+      if (m < pastData.length) {
+        sold = Math.min(pastData[m], stock);
+      } else {
+        var prevSold = schedule[m - 1] || pastData[pastData.length - 1];
+        sold = Math.max(Math.floor(prevSold * avgDecay), 1);
+        sold = Math.min(sold, stock);
+      }
+      schedule.push(sold);
+      stock -= sold;
+    }
+  }
+  return schedule;
 }
 
 function calculate() {
@@ -1030,25 +1251,13 @@ function calculate() {
     return;
   }
 
-  var mustSell       = Math.ceil(qty * FREE_STORAGE_RATE);
-  var earnPerBook    = price * (1 - COMMISSION_RATE);
-  var mustEarn       = mustSell * earnPerBook;
-  var maxEarn        = qty * earnPerBook;
-  var storageUnits   = Math.ceil(qty / STORAGE_UNIT_BOOKS);
+  var simMonths    = parseInt(document.getElementById('sim-months').value, 10) || 12;
+  var storageUnits = Math.ceil(qty / STORAGE_UNIT_BOOKS);
   var storageMonthly = storageUnits * STORAGE_UNIT_FEE;
-
-  // ページ数ベースの返本箱数計算
   var booksPerBox  = Math.min(Math.floor(RETURN_BOX_PAGES / pages), RETURN_BOX_MAX);
   var returnBoxes  = Math.ceil(qty / booksPerBox);
   var returnFee    = returnBoxes * RETURN_BOX_FEE;
 
-  document.getElementById('res-must-sell').textContent       = fmt(mustSell);
-  document.getElementById('res-must-earn').textContent       = fmt(mustEarn);
-  // 1: ラベルに納品数を反映
-  document.getElementById('res-must-label').textContent = 'とらのあなで保管料がかからないように最低限売らなければいけない冊数（納品数' + qty + '冊の60%）';
-  // 4: 免除ライン復活
-  document.getElementById('prog-total').textContent          = qty + '冊';
-  document.getElementById('prog-mid').textContent            = '免除ライン ' + fmt(mustSell) + '冊 (60%)';
   document.getElementById('res-storage-monthly').textContent = fmt(storageMonthly);
   document.getElementById('res-storage-detail').textContent  = '残' + fmt(qty) + '冊 → ' + storageUnits + '単位 × ' + STORAGE_UNIT_FEE.toLocaleString() + '円';
   document.getElementById('res-return-fee').textContent      = fmt(returnFee);
@@ -1058,12 +1267,13 @@ function calculate() {
     '※紙の厚さや判型によって変動するため、あくまで目安としてご活用ください。';
 
   // 保管料の元を取るための最低販売数
+  var earnPerBook = price * (1 - COMMISSION_RATE);
+  var mustSell    = Math.ceil(qty * FREE_STORAGE_RATE);
   var coverBooks  = Math.ceil(storageMonthly / earnPerBook);
   var coverEarn   = fmt(Math.floor(coverBooks * earnPerBook));
   var coverNumEl  = document.getElementById('res-cover-num');
   var coverUnitEl = document.getElementById('res-cover-unit');
   var coverNoteEl = document.getElementById('res-cover-note');
-
   if (coverBooks >= mustSell) {
     coverNumEl.textContent  = '不可';
     coverNumEl.className    = 'big-num red';
@@ -1077,14 +1287,17 @@ function calculate() {
     coverNoteEl.textContent = '※月にこれだけ売れれば、受取額（' + coverEarn + '円）でその月の保管料をカバーできます';
     coverNoteEl.style.color = '#999';
   }
-  // 2: 3社比較シミュレーション生成
-  var expectedRate = parseInt(document.getElementById('expected-rate').value, 10) || 20;
-  document.getElementById('norma-card-title') && (document.getElementById('norma-card-title').textContent = '');
-  var bestResult = renderComparison(qty, expectedRate);
 
-  // シェアテキストを動的生成
-  var simMonths  = parseInt(document.getElementById('sim-months').value, 10) || 12;
-  var shareText  =
+  // 月別販売数スケジュールを生成
+  var salesSchedule = buildSalesSchedule(qty, simMonths);
+  if (!salesSchedule) return;
+
+  // 3社比較シミュレーション生成
+  var bestResult = renderComparison(qty, salesSchedule, simMonths);
+
+  // シェアテキスト
+  var modeLabel = currentPaceMode === 'even' ? '均等ペース' : currentPaceMode === 'event' ? 'イベント初動型' : 'カスタム予測';
+  var shareText =
     '私の本（' + pages + 'P）を' + simMonths + 'ヶ月委託した結果…\n' +
     '最も合っていそうなのは【' + bestResult.name + '】でした📦\n\n' +
     'とら・フロマ・BOOTHの「保管料＆収支」比較シミュレーター📊\n' +
@@ -1093,24 +1306,21 @@ function calculate() {
     'https://tora-fee-sim.vercel.app';
   document.getElementById('share-btn').href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText);
 
-  // 再計算ボックス初期値セット＆イベント登録
+  // 返本再計算ボックス
   var leftoverEl = document.getElementById('leftover-qty');
   leftoverEl.value = qty;
   recalcReturnFee();
-  // イベントが未登録の場合のみ登録（重複防止）
   leftoverEl.oninput = recalcReturnFee;
 
   var results = document.getElementById('results');
   results.style.display = 'block';
-  setTimeout(function() {
-    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 50);
+  setTimeout(function() { results.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 50);
 }
 
-function renderComparison(qty, rate) {
-  var simMonths = parseInt(document.getElementById('sim-months').value, 10) || 12;
+function renderComparison(qty, salesSchedule, simMonths) {
   var price     = parseFloat(document.getElementById('price').value) || 0;
   var pages     = parseInt(document.getElementById('pages').value, 10) || 24;
+  var modeLabel = currentPaceMode === 'even' ? '均等ペース' : currentPaceMode === 'event' ? 'イベント初動型' : '過去データ予測';
 
   // フロマージュ 1スペース収納数（ページ数で判定）
   var frmCapacity = pages <= 36 ? 300 : pages <= 100 ? 200 : pages <= 200 ? 150 : 100;
@@ -1121,7 +1331,7 @@ function renderComparison(qty, rate) {
   // イントロ
   var intro = document.createElement('div');
   intro.className = 'comp-intro';
-  intro.innerHTML = '納品数 <strong>' + qty + '冊</strong>、毎月 <strong>' + rate + '%</strong> ずつ売れた場合の <strong>' + simMonths + 'ヶ月間</strong> の推移を3社で比較します。<br>フロマージュ: 1スペース <strong>' + frmCapacity + '冊</strong>（' + pages + 'Pの場合）';
+  intro.innerHTML = '納品数 <strong>' + qty + '冊</strong>、<strong>' + modeLabel + '</strong> モードで <strong>' + simMonths + 'ヶ月間</strong> の推移を3社で比較します。<br>フロマージュ: 1スペース <strong>' + frmCapacity + '冊</strong>（' + pages + 'Pの場合）';
   wrap.appendChild(intro);
 
   // 各社定義
@@ -1130,15 +1340,12 @@ function renderComparison(qty, rate) {
       key: 'tora', badge: 'とらのあな', name: 'とらのあな（新制度 2026年4月〜）',
       note: '※新制度（2026年4月〜）の予測シミュレーションです。委託初月は無条件無料。専売・発行日前納品オプションで無料期間が延長されます。無条件無料期間終了後は月初在庫の60%販売で保管料無料。',
       calcMonth: function(stock, sold, month, freePeriod) {
-        // 無条件無料期間内
         if (month <= freePeriod) {
           return { fee: 0, revenue: sold * price * 0.7, rowType: 'unconditional' };
         }
-        // 販売率60%達成で無料（実際の販売率で判定し端数バグを防ぐ）
         if (sold >= stock * 0.6) {
           return { fee: 0, revenue: sold * price * 0.7, rowType: 'rate-free' };
         }
-        // 保管料発生（13ヶ月目以降は単価UP）
         var unitFee = month <= 12 ? 500 : 800;
         var fee = Math.ceil(stock / 300) * unitFee;
         return { fee: fee, revenue: sold * price * 0.7, rowType: 'paid' };
@@ -1159,7 +1366,7 @@ function renderComparison(qty, rate) {
       key: 'booth', badge: 'BOOTH倉庫', name: 'BOOTH（倉庫サービス）',
       note: '※販売数が月初在庫の20%未満の月は一律1,100円の保管料が発生します。手取り率は100%（委託手数料なし）。',
       calcMonth: function(stock, sold, month) {
-        var norma = Math.floor(stock * 0.2);  // 販売数の切り捨てと統一
+        var norma = Math.floor(stock * 0.2);
         var fee = sold < norma ? 1100 : 0;
         return { fee: fee, revenue: sold * price };
       }
@@ -1167,7 +1374,7 @@ function renderComparison(qty, rate) {
   ];
 
   // とらのあな 無条件無料期間を計算
-  var freePeriod = 1; // 基本：委託初月
+  var freePeriod = 1;
   if (document.getElementById('opt-senbaai').checked)      freePeriod += 2;
   if (document.getElementById('opt-pre-delivery').checked) freePeriod += 1;
 
@@ -1188,7 +1395,11 @@ function renderComparison(qty, rate) {
     var rows = '';
 
     for (var m = 1; m <= simMonths; m++) {
-      var sold = Math.min(Math.max(Math.floor(stock * (rate / 100)), 1), stock);
+      if (stock <= 0) break;
+      // salesSchedule から販売数を取得（範囲外は最低1冊）
+      var schedIdx = m - 1;
+      var sold = schedIdx < salesSchedule.length ? salesSchedule[schedIdx] : 1;
+      sold = Math.min(Math.max(sold, 1), stock);
       var result = co.key === 'tora'
         ? co.calcMonth(stock, sold, m, freePeriod)
         : co.calcMonth(stock, sold, m);
@@ -1285,10 +1496,9 @@ function recalcReturnFee() {
   feeEl.textContent   = fee.toLocaleString('ja-JP');
 }
 
-['price', 'qty', 'pages'].forEach(function(id) {
-  document.getElementById(id).addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') calculate();
-  });
+['price', 'qty', 'pages', 'expected-rate'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) el.addEventListener('keydown', function(e) { if (e.key === 'Enter') calculate(); });
 });
 </script>
 
