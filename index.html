@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
@@ -8,63 +9,63 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --orange:    #E8611A;
-  --orange-lt: #FF8C42;
-  --navy:      #1A2744;
-  --red:       #CC2200;
-  --gold:      #C49000;
-  --green:     #1a7a45;
-  --gray-bg:   #f5f5f5;
-  --gray-line: #e0e0e0;
-  --text:      #222;
-  --text-sub:  #666;
+–orange:    #E8611A;
+–orange-lt: #FF8C42;
+–navy:      #1A2744;
+–red:       #CC2200;
+–gold:      #C49000;
+–green:     #1a7a45;
+–gray-bg:   #f5f5f5;
+–gray-line: #e0e0e0;
+–text:      #222;
+–text-sub:  #666;
 }
 
 html { font-size: 16px; }
 
 body {
-  font-family: 'Hiragino Maru Gothic ProN', 'Hiragino Sans', 'Yu Gothic UI', 'BIZ UDGothic', 'Meiryo', sans-serif;
-  background-color: #fff;
-  color: var(--text);
-  min-height: 100vh;
-  line-height: 1.6;
+font-family: ‘Hiragino Maru Gothic ProN’, ‘Hiragino Sans’, ‘Yu Gothic UI’, ‘BIZ UDGothic’, ‘Meiryo’, sans-serif;
+background-color: #fff;
+color: var(–text);
+min-height: 100vh;
+line-height: 1.6;
 }
 
 /* ヘッダー */
 .site-header {
-  background: linear-gradient(135deg, #1e2d50 0%, #2e4275 100%);
-  border-bottom: 4px solid #4a6fa5;
-  padding: 1.4rem 1rem 1.2rem;
-  text-align: center;
+background: linear-gradient(135deg, #1e2d50 0%, #2e4275 100%);
+border-bottom: 4px solid #4a6fa5;
+padding: 1.4rem 1rem 1.2rem;
+text-align: center;
 }
 .logo-badge {
-  display: inline-block;
-  background: var(--orange);
-  color: #fff;
-  font-size: 0.62rem;
-  font-weight: 800;
-  padding: 0.18rem 0.7rem;
-  border-radius: 3px;
-  letter-spacing: 0.1em;
-  margin-bottom: 0.55rem;
+display: inline-block;
+background: var(–orange);
+color: #fff;
+font-size: 0.62rem;
+font-weight: 800;
+padding: 0.18rem 0.7rem;
+border-radius: 3px;
+letter-spacing: 0.1em;
+margin-bottom: 0.55rem;
 }
 .site-title {
-  font-weight: 900;
-  font-size: clamp(1.25rem, 5vw, 1.85rem);
-  color: #fff;
-  line-height: 1.35;
+font-weight: 900;
+font-size: clamp(1.25rem, 5vw, 1.85rem);
+color: #fff;
+line-height: 1.35;
 }
 .site-title em { font-style: normal; color: #ffffff; }
 .site-sub { font-size: 0.72rem; color: rgba(255,255,255,0.5); margin-top: 0.4rem; }
 .header-badge {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 900;
-  color: #fff !important;
-  padding: 0.25rem 0.75rem;
-  border-radius: 4px;
-  margin: 0 0.2rem;
-  letter-spacing: 0.04em;
+display: inline-block;
+font-size: 0.72rem;
+font-weight: 900;
+color: #fff !important;
+padding: 0.25rem 0.75rem;
+border-radius: 4px;
+margin: 0 0.2rem;
+letter-spacing: 0.04em;
 }
 .header-badge-tora  { background: #b07800; }
 .header-badge-frm   { background: #1e8449; }
@@ -72,92 +73,92 @@ body {
 
 /* 免責事項 */
 .disclaimer {
-  background: #fff5f5;
-  border: 1.5px solid #ffbbbb;
-  border-radius: 8px;
-  padding: 0.9rem 1.1rem;
-  margin: 1rem;
-  font-size: 0.76rem;
-  line-height: 1.75;
-  color: #b00000;
+background: #fff5f5;
+border: 1.5px solid #ffbbbb;
+border-radius: 8px;
+padding: 0.9rem 1.1rem;
+margin: 1rem;
+font-size: 0.76rem;
+line-height: 1.75;
+color: #b00000;
 }
 .disclaimer-title {
-  display: block;
-  font-weight: 800;
-  font-size: 0.85rem;
-  margin-bottom: 0.35rem;
+display: block;
+font-weight: 800;
+font-size: 0.85rem;
+margin-bottom: 0.35rem;
 }
 
 /* 入力カード */
 .card {
-  background: #fff;
-  border: 1.5px solid var(--gray-line);
-  border-radius: 12px;
-  padding: 1.4rem;
-  margin: 0.8rem 1rem;
+background: #fff;
+border: 1.5px solid var(–gray-line);
+border-radius: 12px;
+padding: 1.4rem;
+margin: 0.8rem 1rem;
 }
 .card-title {
-  font-weight: 800;
-  font-size: 0.95rem;
-  color: var(--navy);
-  letter-spacing: 0.03em;
-  margin-bottom: 1.1rem;
+font-weight: 800;
+font-size: 0.95rem;
+color: var(–navy);
+letter-spacing: 0.03em;
+margin-bottom: 1.1rem;
 }
 
 /* 入力フォーム */
 .input-group { margin-bottom: 1.1rem; }
 .input-label {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--text-sub);
-  margin-bottom: 0.35rem;
+display: block;
+font-size: 0.8rem;
+font-weight: 700;
+color: var(–text-sub);
+margin-bottom: 0.35rem;
 }
 .input-wrap { position: relative; }
 .input-field {
-  width: 100%;
-  background: var(--gray-bg);
-  border: 1.5px solid var(--gray-line);
-  border-radius: 8px;
-  padding: 0.75rem 2.8rem 0.75rem 1rem;
-  font-family: inherit;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--text);
-  -webkit-appearance: none;
-  appearance: none;
-  transition: border-color 0.2s;
+width: 100%;
+background: var(–gray-bg);
+border: 1.5px solid var(–gray-line);
+border-radius: 8px;
+padding: 0.75rem 2.8rem 0.75rem 1rem;
+font-family: inherit;
+font-size: 1.1rem;
+font-weight: 700;
+color: var(–text);
+-webkit-appearance: none;
+appearance: none;
+transition: border-color 0.2s;
 }
-.input-field:focus { outline: none; border-color: var(--orange); background: #fff; }
+.input-field:focus { outline: none; border-color: var(–orange); background: #fff; }
 .input-field::placeholder { color: #bbb; font-weight: 400; }
 .input-unit {
-  position: absolute;
-  right: 0.9rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #aaa;
-  font-size: 0.85rem;
-  pointer-events: none;
+position: absolute;
+right: 0.9rem;
+top: 50%;
+transform: translateY(-50%);
+color: #aaa;
+font-size: 0.85rem;
+pointer-events: none;
 }
 
 /* 計算ボタン */
 .calc-btn {
-  display: block;
-  width: 100%;
-  background: linear-gradient(135deg, #e8611a 0%, #bf4a0e 100%);
-  color: #fff;
-  font-family: inherit;
-  font-weight: 900;
-  font-size: 1rem;
-  line-height: 1.4;
-  padding: 1rem 1.2rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  letter-spacing: 0.02em;
-  box-shadow: 0 3px 14px rgba(232,97,26,0.35);
-  transition: transform 0.12s;
-  margin-top: 0.4rem;
+display: block;
+width: 100%;
+background: linear-gradient(135deg, #e8611a 0%, #bf4a0e 100%);
+color: #fff;
+font-family: inherit;
+font-weight: 900;
+font-size: 1rem;
+line-height: 1.4;
+padding: 1rem 1.2rem;
+border: none;
+border-radius: 10px;
+cursor: pointer;
+letter-spacing: 0.02em;
+box-shadow: 0 3px 14px rgba(232,97,26,0.35);
+transition: transform 0.12s;
+margin-top: 0.4rem;
 }
 .calc-btn:active { transform: scale(0.98); }
 
@@ -165,621 +166,620 @@ body {
 #results { display: none; }
 
 .sec-label {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #aaa;
-  margin: 1.2rem 1rem 0.3rem;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 0.7rem;
+font-weight: 800;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: #aaa;
+margin: 1.2rem 1rem 0.3rem;
 }
 .sec-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--gray-line);
+content: ‘’;
+flex: 1;
+height: 1px;
+background: var(–gray-line);
 }
 
 /* 死守ラインカード */
 .deadline-card {
-  background: #fffbee;
-  border: 1.5px solid #e6c940;
-  border-radius: 12px;
-  padding: 1.4rem;
-  margin: 0.3rem 1rem 0.7rem;
+background: #fffbee;
+border: 1.5px solid #e6c940;
+border-radius: 12px;
+padding: 1.4rem;
+margin: 0.3rem 1rem 0.7rem;
 }
 .deadline-badge {
-  display: inline-block;
-  background: #C49000;
-  color: #fff !important;
-  font-size: 0.6rem;
-  font-weight: 900;
-  padding: 0.18rem 0.65rem;
-  border-radius: 3px;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.9rem;
+display: inline-block;
+background: #C49000;
+color: #fff !important;
+font-size: 0.6rem;
+font-weight: 900;
+padding: 0.18rem 0.65rem;
+border-radius: 3px;
+letter-spacing: 0.08em;
+margin-bottom: 0.9rem;
 }
 
 /* リスクカード */
 .risk-card {
-  background: #fff7f5;
-  border: 1.5px solid #f5c0b0;
-  border-radius: 12px;
-  padding: 1.4rem;
-  margin: 0.3rem 1rem 0.7rem;
+background: #fff7f5;
+border: 1.5px solid #f5c0b0;
+border-radius: 12px;
+padding: 1.4rem;
+margin: 0.3rem 1rem 0.7rem;
 }
 .risk-badge {
-  display: block;
-  font-size: 0.6rem;
-  font-weight: 900;
-  color: var(--red);
-  letter-spacing: 0.08em;
-  margin-bottom: 0.9rem;
+display: block;
+font-size: 0.6rem;
+font-weight: 900;
+color: var(–red);
+letter-spacing: 0.08em;
+margin-bottom: 0.9rem;
 }
 
 /* 希望カード */
 .hope-card {
-  background: #f4fbf6;
-  border: 1.5px solid #9fdbb8;
-  border-radius: 12px;
-  padding: 1.4rem;
-  margin: 0.3rem 1rem 0.7rem;
+background: #f4fbf6;
+border: 1.5px solid #9fdbb8;
+border-radius: 12px;
+padding: 1.4rem;
+margin: 0.3rem 1rem 0.7rem;
 }
 .hope-badge {
-  display: block;
-  font-size: 0.6rem;
-  font-weight: 900;
-  color: var(--green);
-  letter-spacing: 0.08em;
-  margin-bottom: 0.9rem;
+display: block;
+font-size: 0.6rem;
+font-weight: 900;
+color: var(–green);
+letter-spacing: 0.08em;
+margin-bottom: 0.9rem;
 }
 
 /* 結果行 */
 .result-row {
-  margin-bottom: 1.1rem;
-  padding-bottom: 1rem;
-  border-bottom: 1px solid var(--gray-line);
+margin-bottom: 1.1rem;
+padding-bottom: 1rem;
+border-bottom: 1px solid var(–gray-line);
 }
 .result-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 .result-label {
-  font-size: 0.76rem;
-  color: var(--text-sub);
-  font-weight: 700;
-  margin-bottom: 0.35rem;
+font-size: 0.76rem;
+color: var(–text-sub);
+font-weight: 700;
+margin-bottom: 0.35rem;
 }
 .result-val-wrap { display: flex; align-items: baseline; gap: 0.35rem; flex-wrap: wrap; }
 .big-num {
-  font-size: 2.2rem;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.02em;
+font-size: 2.2rem;
+font-weight: 900;
+line-height: 1;
+letter-spacing: -0.02em;
 }
-.big-num.gold   { color: var(--gold); }
-.big-num.orange { color: var(--orange); }
-.big-num.red    { color: var(--red); }
-.big-num.green  { color: var(--green); }
-.result-unit { font-size: 0.88rem; color: var(--text-sub); }
+.big-num.gold   { color: var(–gold); }
+.big-num.orange { color: var(–orange); }
+.big-num.red    { color: var(–red); }
+.big-num.green  { color: var(–green); }
+.result-unit { font-size: 0.88rem; color: var(–text-sub); }
 .result-note { font-size: 0.7rem; color: #999; margin-top: 0.3rem; white-space: pre-line; line-height: 1.7; }
 
 /* プログレスバー */
 .prog-wrap {
-  background: #eee;
-  border-radius: 100px;
-  height: 7px;
-  margin-top: 0.75rem;
-  overflow: hidden;
+background: #eee;
+border-radius: 100px;
+height: 7px;
+margin-top: 0.75rem;
+overflow: hidden;
 }
 .prog-fill {
-  height: 100%;
-  border-radius: 100px;
-  background: linear-gradient(90deg, #E8611A, #FF8C42);
-  width: 60%;
+height: 100%;
+border-radius: 100px;
+background: linear-gradient(90deg, #E8611A, #FF8C42);
+width: 60%;
 }
 .prog-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.62rem;
-  color: #bbb;
-  margin-top: 0.25rem;
+display: flex;
+justify-content: space-between;
+font-size: 0.62rem;
+color: #bbb;
+margin-top: 0.25rem;
 }
 
 /* シェアボタン */
 .share-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.55rem;
-  width: calc(100% - 2rem);
-  margin: 0.5rem 1rem 1rem;
-  background: #000;
-  color: #fff;
-  font-family: inherit;
-  font-weight: 800;
-  font-size: 0.88rem;
-  padding: 0.85rem 1.2rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.15s;
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 0.55rem;
+width: calc(100% - 2rem);
+margin: 0.5rem 1rem 1rem;
+background: #000;
+color: #fff;
+font-family: inherit;
+font-weight: 800;
+font-size: 0.88rem;
+padding: 0.85rem 1.2rem;
+border: none;
+border-radius: 10px;
+cursor: pointer;
+text-decoration: none;
+transition: background 0.15s;
 }
 .share-btn:active { background: #222; }
 
 /* アフィリエイト（収納ケース提案） */
 .aff-section {
-  background: var(--gray-bg);
-  border-top: 1.5px solid var(--gray-line);
-  padding: 1.4rem 1rem 1.8rem;
+background: var(–gray-bg);
+border-top: 1.5px solid var(–gray-line);
+padding: 1.4rem 1rem 1.8rem;
 }
 .aff-section-title {
-  font-size: 0.88rem;
-  font-weight: 900;
-  color: var(--navy);
-  line-height: 1.6;
-  margin-bottom: 1rem;
+font-size: 0.88rem;
+font-weight: 900;
+color: var(–navy);
+line-height: 1.6;
+margin-bottom: 1rem;
 }
 .prod-card {
-  background: #fff;
-  border: 1.5px solid var(--gray-line);
-  border-radius: 12px;
-  padding: 1.1rem 1.1rem 1rem;
-  margin-bottom: 0.9rem;
+background: #fff;
+border: 1.5px solid var(–gray-line);
+border-radius: 12px;
+padding: 1.1rem 1.1rem 1rem;
+margin-bottom: 0.9rem;
 }
 .prod-card:last-child { margin-bottom: 0; }
 .prod-tag {
-  display: inline-block;
-  background: #1A2744;
-  color: #ffffff !important;
-  font-size: 0.6rem;
-  font-weight: 800;
-  padding: 0.15rem 0.6rem;
-  border-radius: 3px;
-  letter-spacing: 0.08em;
-  margin-bottom: 0.55rem;
+display: inline-block;
+background: #1A2744;
+color: #ffffff !important;
+font-size: 0.6rem;
+font-weight: 800;
+padding: 0.15rem 0.6rem;
+border-radius: 3px;
+letter-spacing: 0.08em;
+margin-bottom: 0.55rem;
 }
 .prod-title {
-  font-size: 0.88rem;
-  font-weight: 800;
-  color: var(--text);
-  line-height: 1.5;
-  margin-bottom: 0.3rem;
+font-size: 0.88rem;
+font-weight: 800;
+color: var(–text);
+line-height: 1.5;
+margin-bottom: 0.3rem;
 }
 .prod-name {
-  font-size: 0.75rem;
-  color: var(--text-sub);
-  margin-bottom: 0.75rem;
+font-size: 0.75rem;
+color: var(–text-sub);
+margin-bottom: 0.75rem;
 }
 .prod-check {
-  background: #fff8e6;
-  border: 1.5px solid #e6c940;
-  border-radius: 8px;
-  padding: 0.7rem 0.85rem;
-  margin-bottom: 0.85rem;
+background: #fff8e6;
+border: 1.5px solid #e6c940;
+border-radius: 8px;
+padding: 0.7rem 0.85rem;
+margin-bottom: 0.85rem;
 }
 .prod-check-title {
-  font-size: 0.75rem;
-  font-weight: 900;
-  color: #8a6500;
-  margin-bottom: 0.3rem;
+font-size: 0.75rem;
+font-weight: 900;
+color: #8a6500;
+margin-bottom: 0.3rem;
 }
 .prod-check-body {
-  font-size: 0.76rem;
-  color: #5a4200;
-  line-height: 1.65;
+font-size: 0.76rem;
+color: #5a4200;
+line-height: 1.65;
 }
 .prod-btn {
-  display: block;
-  width: 100%;
-  background: linear-gradient(135deg, #e8611a 0%, #bf4a0e 100%);
-  color: #fff;
-  font-family: inherit;
-  font-weight: 800;
-  font-size: 0.85rem;
-  padding: 0.75rem 1rem;
-  border: none;
-  border-radius: 8px;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  transition: opacity 0.15s;
+display: block;
+width: 100%;
+background: linear-gradient(135deg, #e8611a 0%, #bf4a0e 100%);
+color: #fff;
+font-family: inherit;
+font-weight: 800;
+font-size: 0.85rem;
+padding: 0.75rem 1rem;
+border: none;
+border-radius: 8px;
+text-align: center;
+text-decoration: none;
+cursor: pointer;
+transition: opacity 0.15s;
 }
 .prod-btn:active { opacity: 0.85; }
 
 /* ノルマ表カード */
 .norma-card {
-  background: #fff;
-  border: 1.5px solid var(--gray-line);
-  border-radius: 12px;
-  padding: 1.3rem 1.2rem;
-  margin: 0.3rem 1rem 0.7rem;
+background: #fff;
+border: 1.5px solid var(–gray-line);
+border-radius: 12px;
+padding: 1.3rem 1.2rem;
+margin: 0.3rem 1rem 0.7rem;
 }
 .norma-card-title {
-  font-size: 0.88rem;
-  font-weight: 900;
-  color: var(--navy);
-  margin-bottom: 1rem;
-  line-height: 1.5;
+font-size: 0.88rem;
+font-weight: 900;
+color: var(–navy);
+margin-bottom: 1rem;
+line-height: 1.5;
 }
 .norma-route-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
+display: flex;
+flex-direction: column;
+gap: 0.9rem;
 }
 .norma-route {
-  border-radius: 8px;
-  padding: 0.95rem 1rem;
+border-radius: 8px;
+padding: 0.95rem 1rem;
 }
 .norma-route.route-a {
-  background: #f0f4ff;
-  border: 1.5px solid #a8bcec;
+background: #f0f4ff;
+border: 1.5px solid #a8bcec;
 }
 .norma-route.route-b {
-  background: #fff5f0;
-  border: 1.5px solid #f5c0a0;
+background: #fff5f0;
+border: 1.5px solid #f5c0a0;
 }
 .norma-route-badge {
-  display: inline-block;
-  font-size: 0.6rem;
-  font-weight: 900;
-  letter-spacing: 0.08em;
-  padding: 0.15rem 0.6rem;
-  border-radius: 3px;
-  margin-bottom: 0.6rem;
+display: inline-block;
+font-size: 0.6rem;
+font-weight: 900;
+letter-spacing: 0.08em;
+padding: 0.15rem 0.6rem;
+border-radius: 3px;
+margin-bottom: 0.6rem;
 }
 .route-a .norma-route-badge { background: #1A2744 !important; color: #ffffff !important; }
 .route-b .norma-route-badge { background: #E8611A !important; color: #ffffff !important; }
 .norma-route-name {
-  font-size: 0.8rem;
-  font-weight: 800;
-  color: var(--text);
-  margin-bottom: 0.7rem;
-  line-height: 1.4;
+font-size: 0.8rem;
+font-weight: 800;
+color: var(–text);
+margin-bottom: 0.7rem;
+line-height: 1.4;
 }
 .norma-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+display: flex;
+flex-direction: column;
+gap: 0.3rem;
 }
 .norma-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.76rem;
-  line-height: 1.5;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 0.76rem;
+line-height: 1.5;
 }
 .norma-month {
-  flex-shrink: 0;
-  width: 4.2rem;
-  font-weight: 800;
-  color: var(--navy);
-  font-size: 0.72rem;
+flex-shrink: 0;
+width: 4.2rem;
+font-weight: 800;
+color: var(–navy);
+font-size: 0.72rem;
 }
 .norma-sell {
-  font-weight: 900;
-  color: var(--orange);
-  font-size: 0.88rem;
-  white-space: nowrap;
+font-weight: 900;
+color: var(–orange);
+font-size: 0.88rem;
+white-space: nowrap;
 }
 .norma-rest {
-  font-size: 0.68rem;
-  color: var(--text-sub);
-  white-space: nowrap;
+font-size: 0.68rem;
+color: var(–text-sub);
+white-space: nowrap;
 }
 .norma-done {
-  font-size: 0.72rem;
-  font-weight: 900;
-  color: var(--green);
+font-size: 0.72rem;
+font-weight: 900;
+color: var(–green);
 }
 .norma-row-free {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.76rem;
-  background: rgba(255,255,255,0.65);
-  border-radius: 5px;
-  padding: 0.25rem 0.5rem;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+font-size: 0.76rem;
+background: rgba(255,255,255,0.65);
+border-radius: 5px;
+padding: 0.25rem 0.5rem;
 }
 .norma-row-free .norma-month {
-  color: #888;
-  font-weight: 700;
+color: #888;
+font-weight: 700;
 }
 .norma-free-label {
-  font-size: 0.72rem;
-  color: #888;
+font-size: 0.72rem;
+color: #888;
 }
 .norma-b-warn {
-  display: flex;
-  gap: 0.4rem;
-  align-items: flex-start;
-  background: #ffeaea;
-  border: 1.5px solid #e08080;
-  border-radius: 6px;
-  padding: 0.6rem 0.75rem;
-  margin-top: 0.65rem;
-  font-size: 0.76rem;
-  line-height: 1.65;
-  color: #8b0000;
-  font-weight: 700;
+display: flex;
+gap: 0.4rem;
+align-items: flex-start;
+background: #ffeaea;
+border: 1.5px solid #e08080;
+border-radius: 6px;
+padding: 0.6rem 0.75rem;
+margin-top: 0.65rem;
+font-size: 0.76rem;
+line-height: 1.65;
+color: #8b0000;
+font-weight: 700;
 }
 .norma-b-warn-icon { flex-shrink: 0; }
 .norma-b-notice {
-  font-size: 0.7rem;
-  color: #b05050;
-  line-height: 1.6;
-  margin-bottom: 0.6rem;
-  padding: 0.4rem 0.5rem;
-  background: rgba(176, 80, 80, 0.07);
-  border-radius: 5px;
+font-size: 0.7rem;
+color: #b05050;
+line-height: 1.6;
+margin-bottom: 0.6rem;
+padding: 0.4rem 0.5rem;
+background: rgba(176, 80, 80, 0.07);
+border-radius: 5px;
 }
 
 /* 返本再計算ボックス */
 .recalc-box {
-  background: #f8f8f8;
-  border: 1px dashed #ccc;
-  border-radius: 8px;
-  padding: 0.9rem 1rem;
-  margin-top: 0.8rem;
+background: #f8f8f8;
+border: 1px dashed #ccc;
+border-radius: 8px;
+padding: 0.9rem 1rem;
+margin-top: 0.8rem;
 }
 .recalc-title {
-  font-size: 0.72rem;
-  font-weight: 800;
-  color: #888;
-  margin-bottom: 0.65rem;
-  letter-spacing: 0.03em;
+font-size: 0.72rem;
+font-weight: 800;
+color: #888;
+margin-bottom: 0.65rem;
+letter-spacing: 0.03em;
 }
 .recalc-input-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.6rem;
-  flex-wrap: wrap;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+margin-bottom: 0.6rem;
+flex-wrap: wrap;
 }
 .recalc-label {
-  font-size: 0.74rem;
-  color: var(--text-sub);
-  font-weight: 700;
-  white-space: nowrap;
+font-size: 0.74rem;
+color: var(–text-sub);
+font-weight: 700;
+white-space: nowrap;
 }
 .recalc-input {
-  width: 5.5rem;
-  background: #fff;
-  border: 1.5px solid #ddd;
-  border-radius: 6px;
-  padding: 0.4rem 0.55rem;
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--text);
-  -webkit-appearance: none;
-  appearance: none;
-  transition: border-color 0.2s;
+width: 5.5rem;
+background: #fff;
+border: 1.5px solid #ddd;
+border-radius: 6px;
+padding: 0.4rem 0.55rem;
+font-family: inherit;
+font-size: 0.9rem;
+font-weight: 700;
+color: var(–text);
+-webkit-appearance: none;
+appearance: none;
+transition: border-color 0.2s;
 }
-.recalc-input:focus { outline: none; border-color: var(--orange); }
+.recalc-input:focus { outline: none; border-color: var(–orange); }
 .recalc-unit { font-size: 0.74rem; color: #aaa; }
 .recalc-result {
-  font-size: 0.76rem;
-  color: var(--text-sub);
-  line-height: 1.8;
+font-size: 0.76rem;
+color: var(–text-sub);
+line-height: 1.8;
 }
 .recalc-result strong {
-  color: var(--red);
-  font-size: 0.95rem;
+color: var(–red);
+font-size: 0.95rem;
 }
 
 /* 3社比較シミュレーション */
 .comp-section {
-  margin: 0.3rem 1rem 0.7rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.9rem;
+margin: 0.3rem 1rem 0.7rem;
+display: flex;
+flex-direction: column;
+gap: 0.9rem;
 }
 .comp-intro {
-  font-size: 0.76rem;
-  color: var(--text-sub);
-  line-height: 1.65;
-  background: #f8f8f8;
-  border-radius: 8px;
-  padding: 0.7rem 0.9rem;
-  margin-bottom: 0.1rem;
+font-size: 0.76rem;
+color: var(–text-sub);
+line-height: 1.65;
+background: #f8f8f8;
+border-radius: 8px;
+padding: 0.7rem 0.9rem;
+margin-bottom: 0.1rem;
 }
 .comp-card {
-  border-radius: 12px;
-  padding: 1.1rem 1.1rem 1rem;
-  border: 1.5px solid #ddd;
+border-radius: 12px;
+padding: 1.1rem 1.1rem 1rem;
+border: 1.5px solid #ddd;
 }
 .comp-card.tora  { background: #fffbee; border-color: #e6c940; }
 .comp-card.frm   { background: #f0fff4; border-color: #6fcf97; }
 .comp-card.booth { background: #fff4f4; border-color: #e09090; }
 
 .comp-header {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin-bottom: 0.75rem;
-  flex-wrap: wrap;
+display: flex;
+align-items: center;
+gap: 0.55rem;
+margin-bottom: 0.75rem;
+flex-wrap: wrap;
 }
 .comp-badge {
-  display: inline-block;
-  font-size: 0.82rem;
-  font-weight: 900;
-  letter-spacing: 0.05em;
-  padding: 0.35rem 0.9rem;
-  border-radius: 5px;
-  color: #fff !important;
+display: inline-block;
+font-size: 0.82rem;
+font-weight: 900;
+letter-spacing: 0.05em;
+padding: 0.35rem 0.9rem;
+border-radius: 5px;
+color: #fff !important;
 }
 .tora  .comp-badge { background: #C49000; }
 .frm   .comp-badge { background: #27ae60; }
 .booth .comp-badge { background: #c0392b; }
 
 .comp-name {
-  font-size: 0.82rem;
-  font-weight: 900;
-  color: var(--text);
+font-size: 0.82rem;
+font-weight: 900;
+color: var(–text);
 }
 .comp-total-wrap {
-  display: flex;
-  align-items: baseline;
-  gap: 0.4rem;
-  margin-bottom: 0.8rem;
+display: flex;
+align-items: baseline;
+gap: 0.4rem;
+margin-bottom: 0.8rem;
 }
 .comp-total-label {
-  font-size: 0.72rem;
-  color: var(--text-sub);
-  font-weight: 700;
+font-size: 0.72rem;
+color: var(–text-sub);
+font-weight: 700;
 }
 .comp-total-num {
-  font-size: 1.9rem;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.02em;
+font-size: 1.9rem;
+font-weight: 900;
+line-height: 1;
+letter-spacing: -0.02em;
 }
 .comp-total-num.zero { color: #27ae60; }
 .comp-total-num.low  { color: #e67e22; }
 .comp-total-num.high { color: #c0392b; }
-.comp-total-unit { font-size: 0.8rem; color: var(--text-sub); }
-
+.comp-total-unit { font-size: 0.8rem; color: var(–text-sub); }
 
 .comp-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.4rem;
-  font-size: 0.73rem;
-  line-height: 1.5;
-  padding: 0.3rem 0.45rem;
-  border-radius: 5px;
+display: flex;
+align-items: flex-start;
+gap: 0.4rem;
+font-size: 0.73rem;
+line-height: 1.5;
+padding: 0.3rem 0.45rem;
+border-radius: 5px;
 }
 .comp-row.fee-ok   { background: rgba(39,174,96,0.08); }
 .comp-row.fee-bad  { background: rgba(192,57,43,0.08); }
 .comp-month {
-  flex-shrink: 0;
-  width: 4rem;
-  font-weight: 800;
-  color: #555;
+flex-shrink: 0;
+width: 4rem;
+font-weight: 800;
+color: #555;
 }
-.comp-sell { color: var(--text); }
+.comp-sell { color: var(–text); }
 .comp-fee-ok  { color: #27ae60; font-weight: 700; white-space: nowrap; }
 .comp-fee-bad { color: #c0392b; font-weight: 700; white-space: nowrap; }
 .comp-note {
-  font-size: 0.68rem;
-  color: #888;
-  margin-top: 0.55rem;
-  line-height: 1.6;
+font-size: 0.68rem;
+color: #888;
+margin-top: 0.55rem;
+line-height: 1.6;
 }
 
 .comp-list {
-  max-height: 350px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  margin-bottom: 0.75rem;
+max-height: 350px;
+overflow-y: auto;
+display: flex;
+flex-direction: column;
+gap: 0.3rem;
+margin-bottom: 0.75rem;
 }
 .comp-milestone {
-  font-size: 0.72rem;
-  font-weight: 900;
-  color: #1a7a45;
-  background: rgba(39,174,96,0.13);
-  border-radius: 5px;
-  padding: 0.3rem 0.55rem;
-  margin: 0.15rem 0;
+font-size: 0.72rem;
+font-weight: 900;
+color: #1a7a45;
+background: rgba(39,174,96,0.13);
+border-radius: 5px;
+padding: 0.3rem 0.55rem;
+margin: 0.15rem 0;
 }
 .comp-summary {
-  border-top: 1.5px solid rgba(0,0,0,0.08);
-  padding-top: 0.75rem;
-  margin-top: 0.2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+border-top: 1.5px solid rgba(0,0,0,0.08);
+padding-top: 0.75rem;
+margin-top: 0.2rem;
+display: flex;
+flex-direction: column;
+gap: 0.4rem;
 }
 .comp-summary-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  font-size: 0.76rem;
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+font-size: 0.76rem;
 }
-.comp-summary-label { color: var(--text-sub); font-weight: 700; }
-.comp-summary-val   { font-weight: 900; font-size: 0.9rem; color: var(--red); }
+.comp-summary-label { color: var(–text-sub); font-weight: 700; }
+.comp-summary-val   { font-weight: 900; font-size: 0.9rem; color: var(–red); }
 .comp-summary-val.zero { color: #27ae60; }
 .comp-takehome {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  background: #1A2744;
-  border-radius: 7px;
-  padding: 0.6rem 0.8rem;
-  margin-top: 0.2rem;
+display: flex;
+justify-content: space-between;
+align-items: baseline;
+background: #1A2744;
+border-radius: 7px;
+padding: 0.6rem 0.8rem;
+margin-top: 0.2rem;
 }
 .comp-takehome-label { font-size: 0.72rem; color: rgba(255,255,255,0.7); font-weight: 700; }
 .comp-takehome-val   { font-size: 1.3rem; font-weight: 900; color: #fff; letter-spacing: -0.02em; }
 
 /* 予測注記バナー */
 .prediction-notice {
-  background: #fff8e1;
-  border-left: 4px solid #f0c940;
-  border-radius: 0 6px 6px 0;
-  padding: 0.7rem 1rem;
-  margin: 0 0 0.5rem;
-  font-size: 0.73rem;
-  color: #5a4200;
-  line-height: 1.65;
+background: #fff8e1;
+border-left: 4px solid #f0c940;
+border-radius: 0 6px 6px 0;
+padding: 0.7rem 1rem;
+margin: 0 0 0.5rem;
+font-size: 0.73rem;
+color: #5a4200;
+line-height: 1.65;
 }
 
 /* とらのあな専用オプション枠 */
 .tora-option-group {
-  border: 2px solid #e6c940;
-  border-radius: 10px;
-  padding: 0.9rem 1rem;
-  margin: 0.5rem 0 0;
-  background: #fffdf0;
+border: 2px solid #e6c940;
+border-radius: 10px;
+padding: 0.9rem 1rem;
+margin: 0.5rem 0 0;
+background: #fffdf0;
 }
 .tora-option-title {
-  font-size: 0.76rem;
-  font-weight: 900;
-  color: #8a6500;
-  margin-bottom: 0.7rem;
-  letter-spacing: 0.02em;
+font-size: 0.76rem;
+font-weight: 900;
+color: #8a6500;
+margin-bottom: 0.7rem;
+letter-spacing: 0.02em;
 }
 .tora-option-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  margin-bottom: 0.55rem;
-  font-size: 0.78rem;
-  color: var(--text);
-  line-height: 1.5;
-  cursor: pointer;
+display: flex;
+align-items: flex-start;
+gap: 0.6rem;
+margin-bottom: 0.55rem;
+font-size: 0.78rem;
+color: var(–text);
+line-height: 1.5;
+cursor: pointer;
 }
 .tora-option-item:last-child { margin-bottom: 0; }
-.tora-option-item input[type="checkbox"] {
-  flex-shrink: 0;
-  width: 1.1rem;
-  height: 1.1rem;
-  margin-top: 0.1rem;
-  accent-color: #C49000;
-  cursor: pointer;
+.tora-option-item input[type=“checkbox”] {
+flex-shrink: 0;
+width: 1.1rem;
+height: 1.1rem;
+margin-top: 0.1rem;
+accent-color: #C49000;
+cursor: pointer;
 }
 .tora-option-sub {
-  font-size: 0.68rem;
-  color: #999;
-  display: block;
-  margin-top: 0.1rem;
+font-size: 0.68rem;
+color: #999;
+display: block;
+margin-top: 0.1rem;
 }
 
 /* とらのあな月別タグ */
 .comp-row-free-unconditional {
-  background: rgba(196,144,0,0.10) !important;
+background: rgba(196,144,0,0.10) !important;
 }
 .comp-tag {
-  display: inline-block;
-  font-size: 0.6rem;
-  font-weight: 900;
-  padding: 0.08rem 0.45rem;
-  border-radius: 3px;
-  margin-left: 0.3rem;
-  vertical-align: middle;
-  white-space: nowrap;
+display: inline-block;
+font-size: 0.6rem;
+font-weight: 900;
+padding: 0.08rem 0.45rem;
+border-radius: 3px;
+margin-left: 0.3rem;
+vertical-align: middle;
+white-space: nowrap;
 }
 .comp-tag-free { background: #C49000; color: #fff; }
 .comp-tag-rate { background: #27ae60; color: #fff; }
@@ -787,103 +787,135 @@ body {
 
 /* 頒布ペースタブ */
 .pace-tabs {
-  display: flex;
-  gap: 0.4rem;
-  margin-top: 0.3rem;
-  flex-wrap: wrap;
+display: flex;
+gap: 0.4rem;
+margin-top: 0.3rem;
+flex-wrap: wrap;
 }
 .pace-tab {
-  flex: 1;
-  min-width: 5rem;
-  padding: 0.5rem 0.4rem;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  background: #f8f8f8;
-  font-size: 0.7rem;
-  font-weight: 800;
-  color: #666;
-  cursor: pointer;
-  text-align: center;
-  line-height: 1.3;
-  transition: all 0.15s;
+flex: 1;
+min-width: 5rem;
+padding: 0.5rem 0.4rem;
+border: 2px solid #ddd;
+border-radius: 8px;
+background: #f8f8f8;
+font-size: 0.7rem;
+font-weight: 800;
+color: #666;
+cursor: pointer;
+text-align: center;
+line-height: 1.3;
+transition: all 0.15s;
 }
 .pace-tab.active {
-  border-color: #E8611A;
-  background: #fff5ef;
-  color: #E8611A;
+border-color: #E8611A;
+background: #fff5ef;
+color: #E8611A;
 }
 .pace-panel {
-  background: #fafafa;
-  border: 1.5px solid #eee;
-  border-radius: 8px;
-  padding: 0.8rem;
-  margin-top: 0.5rem;
+background: #fafafa;
+border: 1.5px solid #eee;
+border-radius: 8px;
+padding: 0.8rem;
+margin-top: 0.5rem;
 }
 .pace-panel-note {
-  font-size: 0.72rem;
-  color: #888;
-  line-height: 1.6;
-  margin-bottom: 0.5rem;
+font-size: 0.72rem;
+color: #888;
+line-height: 1.6;
+margin-bottom: 0.5rem;
 }
 .custom-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.4rem;
+display: flex;
+align-items: center;
+gap: 0.5rem;
+margin-bottom: 0.4rem;
 }
 .custom-month-label {
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: #555;
-  width: 4rem;
-  flex-shrink: 0;
+font-size: 0.74rem;
+font-weight: 700;
+color: #555;
+width: 4rem;
+flex-shrink: 0;
 }
 .custom-data-input {
-  flex: 1;
-  padding: 0.4rem 0.6rem;
-  border: 1.5px solid #ddd;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  background: #fff;
-  max-width: 6rem;
+flex: 1;
+padding: 0.4rem 0.6rem;
+border: 1.5px solid #ddd;
+border-radius: 6px;
+font-size: 0.85rem;
+background: #fff;
+max-width: 6rem;
 }
 .pace-advice {
-  margin-top: 0.75rem;
-  padding: 0.65rem 0.75rem;
-  background: #f0f7ff;
-  border-left: 3px solid #5b9bd5;
-  border-radius: 0 6px 6px 0;
-  font-size: 0.72rem;
-  color: #555;
-  line-height: 1.65;
+margin-top: 0.75rem;
+padding: 0.65rem 0.75rem;
+background: #f0f7ff;
+border-left: 3px solid #5b9bd5;
+border-radius: 0 6px 6px 0;
+font-size: 0.72rem;
+color: #555;
+line-height: 1.65;
 }
 .pace-advice strong {
-  color: #2c5f8a;
-  font-size: 0.74rem;
+color: #2c5f8a;
+font-size: 0.74rem;
 }
 
 .add-row-btn {
-  margin-top: 0.4rem;
-  padding: 0.35rem 0.9rem;
-  border: 1.5px dashed #bbb;
-  border-radius: 6px;
-  background: #fff;
-  font-size: 0.75rem;
-  color: #888;
-  cursor: pointer;
-  width: 100%;
+margin-top: 0.4rem;
+padding: 0.35rem 0.9rem;
+border: 1.5px dashed #bbb;
+border-radius: 6px;
+background: #fff;
+font-size: 0.75rem;
+color: #888;
+cursor: pointer;
+width: 100%;
 }
+
+.tora-ticket-info {
+font-size: 0.7rem;
+color: #888;
+margin-bottom: 0.6rem;
+line-height: 1.5;
+}
+.tora-option-badge {
+display: inline-block;
+background: #C49000;
+color: #fff;
+font-size: 0.62rem;
+font-weight: 900;
+padding: 0.05rem 0.45rem;
+border-radius: 3px;
+margin-left: 0.3rem;
+vertical-align: middle;
+}
+.tora-ticket-total {
+margin-top: 0.75rem;
+padding: 0.55rem 0.75rem;
+background: #fff8e1;
+border: 1.5px solid #e6c940;
+border-radius: 7px;
+font-size: 0.76rem;
+color: #6a4e00;
+line-height: 1.5;
+}
+.tora-ticket-total strong { color: #b07800; font-size: 0.9rem; }
+.comp-tag-ticket { background: #7b5ea7; color: #fff; }
+.comp-row-ticket { background: rgba(123,94,167,0.08) !important; }
 
 /* フッター */
 footer {
-  text-align: center;
-  padding: 1.4rem 1rem 2rem;
-  font-size: 0.65rem;
-  color: #bbb;
-  line-height: 1.9;
-  border-top: 1px solid var(--gray-line);
+text-align: center;
+padding: 1.4rem 1rem 2rem;
+font-size: 0.65rem;
+color: #bbb;
+line-height: 1.9;
+border-top: 1px solid var(–gray-line);
 }
 </style>
+
 </head>
 <body>
 
@@ -934,6 +966,7 @@ footer {
   </div>
 
   <!-- 頒布ペース選択 -->
+
   <div class="input-group">
     <label class="input-label">頒布ペースを選んでください</label>
     <div class="pace-tabs">
@@ -944,6 +977,7 @@ footer {
   </div>
 
   <!-- 均等ペース -->
+
   <div id="pace-panel-even" class="pace-panel">
     <div class="input-group">
       <label class="input-label" for="expected-rate">毎月、残りの在庫の何%くらい売れそうか？</label>
@@ -955,6 +989,7 @@ footer {
   </div>
 
   <!-- イベント初動型 -->
+
   <div id="pace-panel-event" class="pace-panel" style="display:none;">
     <div class="pace-panel-note">初月にドカッと売れて、その後はゆっくり減っていくパターン。</div>
     <div class="input-group">
@@ -979,6 +1014,7 @@ footer {
   </div>
 
   <!-- 過去データ予測 -->
+
   <div id="pace-panel-custom" class="pace-panel" style="display:none;">
     <div class="pace-panel-note">過去の頒布実績を入力すると、売上減衰率を自動計算してシミュレーションします。</div>
     <div id="custom-data-rows">
@@ -1015,18 +1051,31 @@ footer {
   </div>
 
   <div class="tora-option-group">
-    <div class="tora-option-title">🐯 とらのあな専用 保管料免除オプション</div>
+    <div class="tora-option-title">🐯 とらのあな専用 保管料免除チケットオプション</div>
+    <div class="tora-ticket-info">チケットは保管料が発生する月に自動で1枚消費され、その月を無料にします。</div>
     <label class="tora-option-item">
-      <input type="checkbox" id="opt-senbaai">
-      <span>専売登録をする（無料期間＋2ヶ月）<span class="tora-option-sub">専売登録により、初月に加えてさらに2ヶ月間無条件無料になります</span></span>
+      <input type="checkbox" id="opt-senbaai" onchange="updateTicketCount()">
+      <span>専売登録をする <span class="tora-option-badge">+2枚</span><span class="tora-option-sub">専売登録でチケットを2枚獲得</span></span>
     </label>
     <label class="tora-option-item">
-      <input type="checkbox" id="opt-pre-delivery">
-      <span>発行日前納品をする（無料期間＋1ヶ月）<span class="tora-option-sub">発行日前に納品することで、さらに1ヶ月間無条件無料になります</span></span>
+      <input type="checkbox" id="opt-pre-delivery" onchange="updateTicketCount()">
+      <span>発行日前納品をする <span class="tora-option-badge">+1枚</span><span class="tora-option-sub">発行日前納品でチケットを1枚獲得</span></span>
     </label>
+    <label class="tora-option-item">
+      <input type="checkbox" id="opt-kikaku" onchange="updateTicketCount()">
+      <span>とらのあな企画に参加する <span class="tora-option-badge">+1枚</span><span class="tora-option-sub">対象企画への参加でチケットを1枚獲得</span></span>
+    </label>
+    <label class="tora-option-item">
+      <input type="checkbox" id="opt-newcircle" onchange="updateTicketCount()">
+      <span>新規サークルである <span class="tora-option-badge">+3枚</span><span class="tora-option-sub">新規サークル様はチケットを3枚獲得</span></span>
+    </label>
+    <div class="tora-ticket-total" id="tora-ticket-total">
+      🎟️ 初期チケット合計：<strong>0枚</strong>（委託初月は無条件無料・チケット消費なし）
+    </div>
   </div>
 
-  <button class="calc-btn" onclick="calculate()">シミュレーションする</button>
+<button class="calc-btn" onclick="calculate()">シミュレーションする</button>
+
 </div>
 
 <div id="results">
@@ -1087,27 +1136,30 @@ footer {
   <div class="aff-section">
     <div class="aff-section-title">📦 自宅に在庫を引き上げるなら。同人誌がシンデレラフィットする最強ケース</div>
 
-    <div class="prod-card">
-      <div class="prod-tag">B5縦置き用</div>
-      <div class="prod-title">B5を「立てて」綺麗に収納したい場合</div>
-      <div class="prod-name">無印良品 ポリプロピレン追加用ストッカー・深型</div>
-      <div class="prod-check">
-        <div class="prod-check-title">✔️ 購入前の最終チェック！</div>
-        <div class="prod-check-body">商品の寸法（外寸）の高さが「約30.5cm」、または引き出しの内寸高さが「約26.5cm」と書いてあるものが正解です！これならB5本（高さ25.7cm）がスッポリ立てて入ります。</div>
-      </div>
-      <a class="prod-btn" href="https://www.amazon.co.jp/s?k=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81+%E3%83%9D%E3%83%AA%E3%83%97%E3%83%AD%E3%83%94%E3%83%AC%E3%83%B3%E8%BF%BD%E5%8A%A0%E7%94%A8%E3%82%B9%E3%83%88%E3%83%83%E3%82%AB%E3%83%BC+%E6%B7%B1%E5%9E%8B&tag=otaku093-22" target="_blank" rel="noopener noreferrer">Amazonでこのストッカーを探す</a>
-    </div>
+```
+<div class="prod-card">
+  <div class="prod-tag">B5縦置き用</div>
+  <div class="prod-title">B5を「立てて」綺麗に収納したい場合</div>
+  <div class="prod-name">無印良品 ポリプロピレン追加用ストッカー・深型</div>
+  <div class="prod-check">
+    <div class="prod-check-title">✔️ 購入前の最終チェック！</div>
+    <div class="prod-check-body">商品の寸法（外寸）の高さが「約30.5cm」、または引き出しの内寸高さが「約26.5cm」と書いてあるものが正解です！これならB5本（高さ25.7cm）がスッポリ立てて入ります。</div>
+  </div>
+  <a class="prod-btn" href="https://www.amazon.co.jp/s?k=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81+%E3%83%9D%E3%83%AA%E3%83%97%E3%83%AD%E3%83%94%E3%83%AC%E3%83%B3%E8%BF%BD%E5%8A%A0%E7%94%A8%E3%82%B9%E3%83%88%E3%83%83%E3%82%AB%E3%83%BC+%E6%B7%B1%E5%9E%8B&tag=otaku093-22" target="_blank" rel="noopener noreferrer">Amazonでこのストッカーを探す</a>
+</div>
 
-    <div class="prod-card">
-      <div class="prod-tag">A5二列 / B5平積み用</div>
-      <div class="prod-title">A5を2列、またはB5を「平積み」でたっぷり収納したい場合</div>
-      <div class="prod-name">無印良品 ポリプロピレンケース・引出式・横ワイド・深型</div>
-      <div class="prod-check">
-        <div class="prod-check-title">✔️ 購入前の最終チェック！</div>
-        <div class="prod-check-body">商品の寸法（外寸）が「幅 約37cm × 奥行き 約26cm × 高さ 約17.5cm」と書いてあるものが正解です！この幅広サイズなら、A5本を横に2列並べて綺麗に収納できます。</div>
-      </div>
-      <a class="prod-btn" href="https://www.amazon.co.jp/s?k=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81+%E3%83%9D%E3%83%AA%E3%83%97%E3%83%AD%E3%83%94%E3%83%AC%E3%83%B3%E3%82%B1%E3%83%BC%E3%82%B9+%E5%BC%95%E5%87%BA%E5%BC%8F+%E6%A8%AA%E3%83%AF%E3%82%A4%E3%83%89+%E6%B7%B1%E5%9E%8B+%E3%83%9B%E3%83%AF%E3%82%A4%E3%83%88%E3%82%B0%E3%83%AC%E3%83%BC&tag=otaku093-22" target="_blank" rel="noopener noreferrer">Amazonでこのケースを探す</a>
-    </div>
+<div class="prod-card">
+  <div class="prod-tag">A5二列 / B5平積み用</div>
+  <div class="prod-title">A5を2列、またはB5を「平積み」でたっぷり収納したい場合</div>
+  <div class="prod-name">無印良品 ポリプロピレンケース・引出式・横ワイド・深型</div>
+  <div class="prod-check">
+    <div class="prod-check-title">✔️ 購入前の最終チェック！</div>
+    <div class="prod-check-body">商品の寸法（外寸）が「幅 約37cm × 奥行き 約26cm × 高さ 約17.5cm」と書いてあるものが正解です！この幅広サイズなら、A5本を横に2列並べて綺麗に収納できます。</div>
+  </div>
+  <a class="prod-btn" href="https://www.amazon.co.jp/s?k=%E7%84%A1%E5%8D%B0%E8%89%AF%E5%93%81+%E3%83%9D%E3%83%AA%E3%83%97%E3%83%AD%E3%83%94%E3%83%AC%E3%83%B3%E3%82%B1%E3%83%BC%E3%82%B9+%E5%BC%95%E5%87%BA%E5%BC%8F+%E6%A8%AA%E3%83%AF%E3%82%A4%E3%83%89+%E6%B7%B1%E5%9E%8B+%E3%83%9B%E3%83%AF%E3%82%A4%E3%83%88%E3%82%B0%E3%83%AC%E3%83%BC&tag=otaku093-22" target="_blank" rel="noopener noreferrer">Amazonでこのケースを探す</a>
+</div>
+```
+
   </div>
 
 </div>
@@ -1229,6 +1281,16 @@ function buildSalesSchedule(qty, simMonths) {
   return schedule;
 }
 
+function updateTicketCount() {
+  var total = 0;
+  if (document.getElementById('opt-senbaai').checked)      total += 2;
+  if (document.getElementById('opt-pre-delivery').checked) total += 1;
+  if (document.getElementById('opt-kikaku').checked)       total += 1;
+  if (document.getElementById('opt-newcircle').checked)    total += 3;
+  document.getElementById('tora-ticket-total').innerHTML =
+    '🎟️ 初期チケット合計：<strong>' + total + '枚</strong>（委託初月は無条件無料・チケット消費なし）';
+}
+
 function calculate() {
   var price = parseFloat(document.getElementById('price').value);
   var qty   = parseInt(document.getElementById('qty').value, 10);
@@ -1326,22 +1388,18 @@ function renderComparison(qty, salesSchedule, simMonths) {
   intro.innerHTML = '納品数 <strong>' + qty + '冊</strong>、<strong>' + modeLabel + '</strong> モードで <strong>' + simMonths + 'ヶ月間</strong> の推移を3社で比較します。<br>フロマージュ: 1スペース <strong>' + frmCapacity + '冊</strong>（' + pages + 'Pの場合）';
   wrap.appendChild(intro);
 
+  // とらのあな チケット枚数を計算
+  var initTickets = 0;
+  if (document.getElementById('opt-senbaai').checked)     initTickets += 2;
+  if (document.getElementById('opt-pre-delivery').checked) initTickets += 1;
+  if (document.getElementById('opt-kikaku').checked)       initTickets += 1;
+  if (document.getElementById('opt-newcircle').checked)    initTickets += 3;
+
   // 各社定義
   var companies = [
     {
       key: 'tora', badge: 'とらのあな', name: 'とらのあな（新制度 2026年4月〜）',
-      note: '※新制度（2026年4月〜）の予測シミュレーションです。委託初月は無条件無料。専売・発行日前納品オプションで無料期間が延長されます。無条件無料期間終了後は月初在庫の60%販売で保管料無料。',
-      calcMonth: function(stock, sold, month, freePeriod) {
-        if (month <= freePeriod) {
-          return { fee: 0, revenue: sold * price * 0.7, rowType: 'unconditional' };
-        }
-        if (sold >= stock * 0.6) {
-          return { fee: 0, revenue: sold * price * 0.7, rowType: 'rate-free' };
-        }
-        var unitFee = month <= 12 ? 500 : 800;
-        var fee = Math.ceil(stock / 300) * unitFee;
-        return { fee: fee, revenue: sold * price * 0.7, rowType: 'paid' };
-      }
+      note: '※新制度（2026年4月〜）の予測シミュレーションです。委託初月・月初在庫0の月は無条件無料（チケット消費なし）。販売率60%以上で無料。それ以外はチケットを1枚消費して無料、チケット切れで保管料発生。'
     },
     {
       key: 'frm', badge: 'フロマージュ', name: 'フロマージュ（メロンブックス）',
@@ -1385,40 +1443,86 @@ function renderComparison(qty, salesSchedule, simMonths) {
     var totalFee = 0;
     var totalRevenue = 0;
     var rows = '';
+    var tickets = (co.key === 'tora') ? initTickets : 0;
+    var isFirstMonth = true;
 
     for (var m = 1; m <= simMonths; m++) {
       if (stock <= 0) break;
-      // salesSchedule から販売数を取得（範囲外は最低1冊）
       var schedIdx = m - 1;
       var sold = schedIdx < salesSchedule.length ? salesSchedule[schedIdx] : 1;
       sold = Math.min(Math.max(sold, 1), stock);
-      var result = co.key === 'tora'
-        ? co.calcMonth(stock, sold, m, freePeriod)
-        : co.calcMonth(stock, sold, m);
+      var rest = stock - sold;
+      var result;
+
+      if (co.key === 'tora') {
+        var revenue = sold * price * 0.7;
+        var unitFee = m <= 12 ? 500 : 800;
+        var baseFee = Math.ceil(stock / 300) * unitFee;
+
+        // ① 委託初月（最初の月）→ 無条件無料
+        if (isFirstMonth) {
+          result = { fee: 0, revenue: revenue, rowType: 'unconditional', tickets: tickets };
+          isFirstMonth = false;
+        }
+        // ② 月初在庫0（追納初月扱い）→ 無条件無料
+        else if (stock === 0) {
+          result = { fee: 0, revenue: revenue, rowType: 'unconditional', tickets: tickets };
+        }
+        // ③ 販売率60%以上 → 無料
+        else if (stock > 0 && sold >= stock * 0.6) {
+          result = { fee: 0, revenue: revenue, rowType: 'rate-free', tickets: tickets };
+        }
+        // ④ チケット消費で無料
+        else if (tickets > 0) {
+          tickets--;
+          result = { fee: 0, revenue: revenue, rowType: 'ticket', tickets: tickets };
+        }
+        // ⑤ 保管料発生
+        else {
+          result = { fee: baseFee, revenue: revenue, rowType: 'paid', tickets: 0 };
+        }
+
+      } else if (co.key === 'frm') {
+        var rate70 = sold * price * 0.7;
+        var rate80 = sold * price * 0.8;
+        if (m <= 6) {
+          result = { fee: 0, revenue: rate70, milestone: false };
+        } else {
+          var frmFee = Math.ceil(stock / frmCapacity) * 297;
+          result = { fee: frmFee, revenue: rate80, milestone: m === 7 };
+        }
+      } else {
+        var norma = Math.floor(stock * 0.2);
+        result = { fee: sold < norma ? 1100 : 0, revenue: sold * price };
+      }
+
       totalFee     += result.fee;
       totalRevenue += result.revenue;
-      var rest = stock - sold;
 
       // フロマージュ 7ヶ月目マイルストーン
       if (result.milestone) {
         rows += '<div class="comp-milestone">✨ 7ヶ月目以降：掛率80%にUP！ / 保管料: ' + frmCapacity + '冊毎に297円</div>';
       }
 
-      // 行スタイルとタグ（とらのあな専用タイプ分け）
+      // 行スタイルとタグ
       var rowClass = result.fee > 0 ? 'fee-bad' : 'fee-ok';
       var feeText, tagHtml = '';
 
       if (co.key === 'tora') {
         if (result.rowType === 'unconditional') {
           rowClass = 'fee-ok comp-row-free-unconditional';
-          tagHtml  = '<span class="comp-tag comp-tag-free">無条件無料</span>';
-          feeText  = '<span class="comp-fee-ok">保管料: 無料 🎁</span>';
+          tagHtml  = '<span class="comp-tag comp-tag-free">無条件無料🎁</span>';
+          feeText  = '<span class="comp-fee-ok">保管料: 無料</span>';
         } else if (result.rowType === 'rate-free') {
           tagHtml = '<span class="comp-tag comp-tag-rate">60%達成✅</span>';
-          feeText = '<span class="comp-fee-ok">保管料: 無料 ✅</span>';
+          feeText = '<span class="comp-fee-ok">保管料: 無料</span>';
+        } else if (result.rowType === 'ticket') {
+          rowClass = 'fee-ok comp-row-ticket';
+          tagHtml  = '<span class="comp-tag comp-tag-ticket">🎟️チケット使用</span>';
+          feeText  = '<span class="comp-fee-ok">保管料: 無料（残' + result.tickets + '枚）</span>';
         } else {
           tagHtml = '<span class="comp-tag comp-tag-paid">保管料発生⚠️</span>';
-          feeText = '<span class="comp-fee-bad">保管料: ' + result.fee.toLocaleString('ja-JP') + '円 ⚠️</span>';
+          feeText = '<span class="comp-fee-bad">保管料: ' + result.fee.toLocaleString('ja-JP') + '円</span>';
         }
       } else {
         var feeClass = result.fee > 0 ? 'comp-fee-bad' : 'comp-fee-ok';
@@ -1493,5 +1597,6 @@ function recalcReturnFee() {
   if (el) el.addEventListener('keydown', function(e) { if (e.key === 'Enter') calculate(); });
 });
 </script>
+
 </body>
 </html>
